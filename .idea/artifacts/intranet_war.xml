@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="intranet:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="intranet-1.0.0-BUILD-SNAPSHOT.war">
+      <element id="artifact" artifact-name="intranet:war exploded" />
+    </root>
+  </artifact>
+</component>
