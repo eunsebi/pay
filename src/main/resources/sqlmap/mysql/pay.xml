@@ -34,6 +34,7 @@
 			ENDTIME as endtime
 		FROM PAY_VIEW
 		WHERE (TO_DAYS(STARTTIME) BETWEEN TO_DAYS(#{sDay}) AND TO_DAYS(LAST_DAY(#{eDay})) OR TO_DAYS(ENDTIME) BETWEEN TO_DAYS(#{sDay}) AND TO_DAYS(LAST_DAY(#{eDay})) OR TO_DAYS(#{sDay}) BETWEEN TO_DAYS(STARTTIME) AND TO_DAYS(ENDTIME))
+			AND WRITER = #{write}
 		ORDER BY STARTTIME ASC
 	</select>
 
@@ -43,7 +44,6 @@
 			EMAIL as email,
 			WRITER as writer,
 			TITLE as title,
-			CONTENTS as contents,
 			STARTTIME as starttime,
 			ENDTIME as endtime,
 			REGTIME as regtime,
@@ -58,6 +58,7 @@
 			(
 				SEQ,
 				WRITER,
+				TITLE,
 				pay_day,
 				pay_ot,
 				pay_ottime,
@@ -73,6 +74,7 @@
 			(
 			#{seq},
 			#{writer},
+				#{title},
 			#{pay_day},
 			#{pay_ot},
 			#{pay_ottime},
@@ -136,13 +138,13 @@
 	</delete>
 	
 	<delete id="delete">
-		DELETE FROM SCHEDULE
+		DELETE FROM PAY
 		WHERE SEQ = #{seq}
 		AND WRITER = #{writer}
 	</delete>
 	
 	<update id="update">
-		UPDATE SCHEDULE
+		UPDATE PAY
 		SET TITLE = #{title},
 			CONTENTS = #{contents},
 			STARTTIME = #{starttime},

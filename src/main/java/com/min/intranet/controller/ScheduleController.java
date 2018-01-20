@@ -66,12 +66,15 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "scheduleArticle.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Map<String, String>> scheduleArticle(Locale locale, Model model, @RequestParam("syear") String syear,
+	public List<Map<String, String>> scheduleArticle(Locale locale, Model model, HttpServletRequest req,
+													 @RequestParam("syear") String syear,
 			@RequestParam("smonth") String smonth, @RequestParam("eyear") String eyear,
 			@RequestParam("emonth") String emonth) throws Exception {
 		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
 
+
 		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("write", req.getSession());
 		paramMap.put("sDay", syear + "/" + smonth + "/01");
 		paramMap.put("eDay", eyear + "/" + emonth + "/01");
 		List<Map<String, String>> resultMap = homeService.getScheduleArticles(paramMap);
@@ -106,12 +109,13 @@ public class ScheduleController {
 			@RequestParam("title") String title, @RequestParam("endtime") String endtime,
 			@RequestParam("pay_day") String pay_day, @RequestParam("pay_ot") String pay_ot,
 			@RequestParam("pay_ottime") String pay_ottime,
-											 /*@RequestParam("pay_latetime") String pay_latetime,*/
-			/*@RequestParam("pay_nighttime") String pay_nighttime,*/
+			@RequestParam("pay_latetime") String pay_latetime,
+			@RequestParam("pay_nighttime") String pay_nighttime,
 			@RequestParam("starttime") String starttime,
 			/*@RequestParam("realnames") String realnames, @RequestParam("subnames") String subnames,*/
 			@RequestParam("etcYn") String etcYn) throws Exception {
 		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
+
 		System.out.println("333333333333333333333333333333333333333333333333333");
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -119,15 +123,16 @@ public class ScheduleController {
 		//StringTokenizer realname = new StringTokenizer(realnames, ",");
 		//StringTokenizer subname = new StringTokenizer(subnames, ",");
 
+		System.out.println("Write : " + writer);
 		int seq = homeService.getScheduleMaxSeq();
 		paramMap.put("seq", "" + (seq + 1));
 		paramMap.put("writer", writer);
+		paramMap.put("title", title);
 		paramMap.put("pay_day", pay_day);
 		paramMap.put("pay_ot", pay_ot);
 		paramMap.put("pay_ottime", pay_ottime);
-		//paramMap.put("pay_latetime", pay_latetime);
-		paramMap.put("pay_latetime", "0");
-		paramMap.put("pay_nighttime", "0");
+		paramMap.put("pay_latetime", pay_latetime);
+		paramMap.put("pay_nighttime", pay_nighttime);
 		paramMap.put("starttime", starttime);
 		paramMap.put("endtime", endtime);
 		paramMap.put("etcYn", etcYn);

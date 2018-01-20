@@ -72,13 +72,8 @@ public class UserController {
 		Map<String, Object> userMap = new HashMap<String, Object>();
 		HttpSession session = req.getSession();
 
-		System.out.println("333333333333333333333333333333333333333333");
-		System.out.println("입력 email : " + email);
-		System.out.println("입력 passwd : " + passwd);
-
 		if (adminEmail.equals(email) && adminPass.equals(passwd)) {
 			paramMap.put("email", adminEmail);
-			System.out.println("email : " + paramMap.get(email));
 			if (userService.getUser(paramMap).isEmpty()) {
 				paramMap.put("email", adminEmail);
 				paramMap.put("name", "admin");

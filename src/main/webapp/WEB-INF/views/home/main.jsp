@@ -35,13 +35,16 @@
 <!-- 탭 -->
 	<ul class="tab tab-top">
 		<li class="active">
-			<a href="#" id="tab_View" title="main_View">Schedule</a>
+			<a href="#" id="tab_View" title="main_View">근무시간</a>
 		</li>
+        <c:if test="${sessionScope.isAdmin}">
 		<li >
 			<a href="#" id="tab_Home" title="main_Home">Employee</a>
 		</li>
 		<li><a href="#" id="tab_Lib" title="main_Lib">자료실</a></li>
 		<li><a href="#" id="tab_Etc" title="main_Etc">Etc</a></li>
+        </c:if>
+        <li><a href="#" id="tab_Pay" title="main_Pay">급여계산</a></li>
 	</ul>
 <!-- 스케줄 글보기 모달 -->
 	<div id="modal" class="msgbox" style="display: none;">
@@ -135,12 +138,11 @@
 	    </div>
 		<div class="body">
 			<table border="0">
-				<tr>
+				<%--<tr>
 					<td colspan="4">
-						<%--<input class="input input-rect" id="title" name="title" style="width: 612px" maxlength="100" placeholder="제목" value="근무시간 등록"/>--%>
-							<input type="text" class="input input-rect" id="title" name="title" style="width: 612px" maxlength="100" value="근무시간 등록"/>
+						<input class="input input-rect" id="title" name="title" style="width: 612px" maxlength="100" placeholder="제목" value="근무시간 등록"/>
 					</td>
-				</tr>
+				</tr>--%>
 				<!-- 달력 start -->
 				<tr>
 					<td colspan="4">
@@ -207,11 +209,11 @@
 					</td>
 				</tr>--%>
 				<!-- 첨부파일 end -->
-				<tr>
+				<%--<tr>
 					<td colspan="4" style="border-spacing: 0px;border-collapse: 0px;height:25px;border: 1px solid #BEBeBe;">
 						공유 여부 : <input type="checkbox" id="etcYn"><font color="red">(체크시 Etc 에 표시 되지 않습니다.)</font>
 					</td>
-				</tr>
+				</tr>--%>
 				<%--<tr>
 					<td colspan="4">
 						<textarea class="input" id="contents" name="contents" style="width: 610px;height: 300px;" placeholder="내용"></textarea>
@@ -608,7 +610,17 @@
 			</div>
 			<div id='schcalendar'></div>
 		</div>
+        <!-- Pay_View -->
+        <div id="main_Pay" style="display: block;">
+            <div class="group" >
+                <a class="left btn btn-mini btn-gray-black" id="pay_time"><span>월별 시급등록</span>&nbsp;<i class="icon-refresh"></i></a>
+            </div>
+        </div>
 	</div>
+    <!-- 시급 등록 모달 -->
+    <div id="payTimeModal" class="msgbox" style="display: none;">
+        시급 등록
+    </div>
 	</div>
 </div>
 <script type="text/javascript">

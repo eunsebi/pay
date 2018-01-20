@@ -160,10 +160,14 @@ $(function(){
 	$('#lib-refresh').click(function(){
 		getFiles();
 	});
-	
+
+	$('#pay_time').click(function () {
+        payTimeModal.show();
+    })
+
 	$('#writeBtn').click(function(){
         //oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
-		var title = $('#title').val();
+		//var title = $('#title').val();
 		//var contents = $('#contents').val();
 		var starttime = $('#starttime').val();
 		var endtime = $('#endtime').val();
@@ -171,7 +175,23 @@ $(function(){
         var pay_ot = $('#pay_ot').val();
         var pay_ottime = $('#pay_ottime').val();
         var pay_latetime = $('#pay_latetime').val();
-		
+        var title;
+        var title1;
+        var title2;
+
+        if (pay_day == "1") title1 = "주간";
+        else if (pay_day == "2") title1 = "야간";
+        else if (pay_day == "3") title1 = "특근";
+        else if (pay_day == "4") title1 = "야특";
+        else if (pay_day == "5") title1 = "년차";
+        else if (pay_day == "6") title1 = "결근";
+
+        if (pay_ot == "1") title2 = "OT 했다";
+        else title2 = "OT 안했다";
+
+        if (pay_day == "5") title = title1;
+        else title = title1 + " " + title2;
+
 		if(trim(title) == ''){
 			alert('제목을 입력하세요');
 			$('#title').val('');
@@ -207,7 +227,22 @@ $(function(){
 			scheduleParam.starttime = starttime;
 			scheduleParam.endtime = endtime;
 			var url = getContextPath()+'/home/scheduleWrite.do';
-            alert("333333");
+
+            if (pay_day == "2" || pay_day == "4") {
+                if (pay_ot == "1") {
+                    scheduleParam.pay_nighttime = '8';
+                } else {
+                    scheduleParam.pay_nighttime = '7';
+                }
+                //alert(form.salaryHolidayTime.value);
+            }  else {
+                scheduleParam.pay_nighttime = "0";
+            }
+
+            if (pay_latetime == null || pay_latetime == "0") {
+                scheduleParam.pay_latetime = "0";
+            }
+
 			if(scheduleParam.seq > 0){
 				url = getContextPath()+'/home/scheduleUpdate.do';
 			}
@@ -223,10 +258,11 @@ $(function(){
 					$('iframe[id!=scheduleFrame]').remove();
 					$('#title').val('');
 					//$('#contents').val('');
-                    $('#pay_day').val('');
+                    /*$('#pay_day').val('');
                     $('#pay_ot').val('');
                     $('#pay_ottime').val('');
-                    //$('#pay_latetime').val('');
+                    $('#pay_latetime').val('');
+                    $('#pay_nighttime').val('');*/
 					$('#schcalendar').fullCalendar('refetchEvents');
 					$('#schedulefileName').html('');
 					var date = new Date();
@@ -236,7 +272,7 @@ $(function(){
 			});
 		}
 	});
-	
+
 	$('#schcalendar').fullCalendar({
 		header: {
 			left: ' ',
@@ -294,11 +330,11 @@ $(function(){
 	    },
 	    eventClick: function(calEvent, jsEvent, view) {
 	    	if(calEvent.seq != null){
-	    		
+
 	    		$.getJSON(getContextPath()+"/home/scheduleFiles.do",{seq:calEvent.seq},function(response){
 	    			var files;
 	    			files = response;
-	    		
+
 			    	$.getJSON(getContextPath()+"/home/getSchedule.do",{seq:calEvent.seq},function(response){
 			    		var article = response;
 				    	var sdate = new Date(article.starttime);
@@ -337,7 +373,7 @@ $(function(){
 											    addClass : 'btn btn-gray btn-small',
 											    onclick: 'javascript:modal.hide();'
 											});
-							
+
 							$('#contentsBtn').html( updateBtn[0].outerHTML +  deleteBtn[0].outerHTML +  closeBtn[0].outerHTML);
 						}else{
 							var closeBtn = $('<a/>', {
@@ -348,7 +384,7 @@ $(function(){
 							    addClass : 'btn btn-gray btn-small',
 							    onclick: 'javascript:modal.hide();'
 							});
-			
+
 							$('#contentsBtn').html( closeBtn[0].outerHTML);
 						}
 						$("#modal-title").html(article.title + '<span style="float:right;">'+article.writer+'</span>');
@@ -372,7 +408,7 @@ $(function(){
 			editorInit('contents');
 	    }
 	});
-	
+
 	$('#mailBtn').click(function(){
 		oEditors.getById["mail-contents"].exec("UPDATE_CONTENTS_FIELD", []);
 		var title = $('#mail-title').val();
@@ -421,7 +457,7 @@ $(function(){
 			});
 		}
 	});
-	
+
 	$('#work-refresh').click(function(){
 		refrashRow(userArticle, {param:{page : 1, email : $('#selectUser').val()}, url: getContextPath()+'/home/userArticle.do'});
 	});
@@ -445,7 +481,7 @@ $(function(){
 		alert();
 	});
 	
-	$('#tab_Home,#tab_Schedule,#tab_Etc,#tab_Lib,#tab_View').click(function(){
+	$('#tab_Home,#tab_Schedule,#tab_Etc,#tab_Lib,#tab_View,#tab_Pay').click(function(){
 		var id = $(this).attr('id');
 		$('#selectTab').val(id);
 		$('.tab').find('li').each(function(){
