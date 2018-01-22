@@ -115,10 +115,14 @@ $(function(){
 		$('#gameBody').append('<iframe src="'+getContextPath()+'/resources/html/snake.jsp" height="400"></iframe>');
 		gameModal.show();
 	});
-	
+
 	$('#lib-fileadd').click(function(){
-		fileModal.show();
+        payModal.show();
 	});
+
+    $('#pay-monthtime').click(function(){
+        fileModal.show();
+    });
 	
 	$('#sessionBtn').click(function(){
 		if(sessionCheker == null){
@@ -160,10 +164,6 @@ $(function(){
 	$('#lib-refresh').click(function(){
 		getFiles();
 	});
-
-	$('#pay_time').click(function () {
-        payTimeModal.show();
-    })
 
 	$('#writeBtn').click(function(){
         //oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -472,6 +472,54 @@ $(function(){
 		$('iframe[id!=scheduleFrame]').remove();
 	});
 
+    $('#payClose').click(function(){
+        fileModal.hide();
+        $('iframe[id!=scheduleFrame]').remove();
+    });
+
+    $('#payBtn').click(function(){
+        var time_salary = $('#time_salary').val();
+        var job_time = $('#job_time').val();
+        var full_working_pension = $('#full_working_pension').val();
+        var family_pension = $('#family_pension').val();
+        var texes = $('#texes').val();
+        var position_pension = $('#position_pension').val();
+
+		/*payParam.time_salary=time_salary;
+		payParam.job_time=job_time;
+		payParam.full_working_pension=full_working_pension;
+		payParam.family_pension=family_pension;
+		payParam.texes=texes;
+		payParam.position_pension=position_pension;*/
+
+		var url = getContextPath()+'/home/payMonthWrite.do';
+
+		/*if(payParam.seq > 0){
+			url = getContextPath()+'/home/payMonthUpdate.do';
+		}*/
+
+		$.ajax({
+			url : url,
+            //url : getContextPath()+"/home/payMonthWrite.do",
+			//data : payParam,
+            data : {
+				time_salary : $('#time_salary').val(),
+				job_time : $('#job_time').val(),
+				full_working_pension : $('#full_working_pension').val(),
+                family_pension : $('#family_pension').val(),
+                texes : $('#texes').val(),
+                position_pension : $('#position_pension').val(),
+                longevity_pension : $('#longevity_pension').val(),
+                pay_date : $('#pay_date').val()
+			},
+			type : 'post',
+			success : function(response){
+				//alert(JSON.parse(response).msg);
+                fileModal.hide();
+			}
+		});
+    });
+
 	$('#mailClose').click(function(){
 		mailModal.hide();
 		$('iframe[id!=scheduleFrame]').remove();
@@ -508,7 +556,7 @@ $(function(){
 		$('#head-hour').text(date.getHours());
 		$('#head-min').text(date.getMinutes());
 	},1000);
-	
+
 	$("#etc-print").click(function() {
 	    window.print();
 	});

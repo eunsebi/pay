@@ -72,9 +72,11 @@ public class ScheduleController {
 			@RequestParam("emonth") String emonth) throws Exception {
 		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
 
+		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 
+		System.out.println("write : "  + writer);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("write", req.getSession());
+		paramMap.put("write", writer);
 		paramMap.put("sDay", syear + "/" + smonth + "/01");
 		paramMap.put("eDay", eyear + "/" + emonth + "/01");
 		List<Map<String, String>> resultMap = homeService.getScheduleArticles(paramMap);
@@ -98,6 +100,42 @@ public class ScheduleController {
 		return resultMap;
 	}
 
+	@RequestMapping(value = "payMonthWrite.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> payMonthWrite(Locale locale, Model model, HttpServletRequest request,
+											 @RequestParam("time_salary") String time_salary,
+											 @RequestParam("job_time") String job_time,
+											 @RequestParam("full_working_pension") String full_working_pension,
+											 @RequestParam("family_pension") String family_pension,
+											 @RequestParam("texes") String texes,
+											 @RequestParam("position_pension") String position_pension,
+                                             @RequestParam("longevity_pension") String longevity_pension,
+											 @RequestParam("pay_date") String pay_date
+											 ) throws Exception {
+
+		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+
+		//int seq = homeService.getScheduleMaxSeq();
+		//paramMap.put("seq", "" + (seq + 1));
+		paramMap.put("time_salary", time_salary);
+		paramMap.put("job_time", job_time);
+		paramMap.put("full_working_pension", full_working_pension);
+		paramMap.put("family_pension", family_pension);
+		paramMap.put("texes", texes);
+		paramMap.put("position_pension", position_pension);
+        paramMap.put("longevity_pension", longevity_pension);
+		paramMap.put("user_email", writer);
+		paramMap.put("pay_date", pay_date);
+
+		resultMap.put("resultCnt", homeService.payMonthWrite(paramMap));
+
+		return resultMap;
+	}
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * 
@@ -116,14 +154,12 @@ public class ScheduleController {
 			@RequestParam("etcYn") String etcYn) throws Exception {
 		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
 
-		System.out.println("333333333333333333333333333333333333333333333333333");
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 		//StringTokenizer realname = new StringTokenizer(realnames, ",");
 		//StringTokenizer subname = new StringTokenizer(subnames, ",");
 
-		System.out.println("Write : " + writer);
 		int seq = homeService.getScheduleMaxSeq();
 		paramMap.put("seq", "" + (seq + 1));
 		paramMap.put("writer", writer);

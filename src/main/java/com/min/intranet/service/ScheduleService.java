@@ -18,6 +18,8 @@ public interface ScheduleService {
     
     public int scheduleWrite(Map<String, String> paramMap) throws Exception;
 
+    public int payMonthWrite(Map<String, String> paramMap) throws Exception;
+
     public int scheduleUpdate(Map<String, String> paramMap) throws Exception;
 
     public int scheduleDelete(Map<String, String> paramMap) throws Exception;

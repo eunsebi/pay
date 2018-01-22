@@ -7,6 +7,7 @@ var mailModal;
 var userModal;
 var fileModal;
 var chartModal;
+var payModal;
 var searchCombo;
 var userArticle;
 var userRadio;
@@ -55,7 +56,6 @@ jui.ready(function(ui, uix, _) {
 		target: ".main-container"
 	});
 	
-	
 	passwdModal = ui.modal("#passwdModal", {
 		color: "black",
 		target: ".main-container"
@@ -83,6 +83,11 @@ jui.ready(function(ui, uix, _) {
 		color: "black",
 		target: ".main-container"
 	});
+
+    payModal = ui.modal("#payModal", {
+        color: "black",
+        target: ".main-container"
+    });
 	
 	searchCombo = ui.combo("#searchCombo", {
 		width: 200,

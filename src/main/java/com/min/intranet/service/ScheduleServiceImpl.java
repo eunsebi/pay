@@ -63,6 +63,11 @@ public class ScheduleServiceImpl extends SqlSessionDaoSupport implements Schedul
 	}
 
 	@Override
+	public int payMonthWrite(Map<String, String> paramMap) throws Exception {
+		return getSqlSession().insert("pay.payMonthWrite", paramMap);
+	}
+
+	@Override
 	public Map<String, String> getSchedule(Map<String, String> paramMap)throws Exception {
 		// TODO Auto-generated method stub
 		Map<String, String> resultMap = getSqlSession().selectOne("pay.getSchedule", paramMap);

@@ -34,7 +34,7 @@
 			ENDTIME as endtime
 		FROM PAY_VIEW
 		WHERE (TO_DAYS(STARTTIME) BETWEEN TO_DAYS(#{sDay}) AND TO_DAYS(LAST_DAY(#{eDay})) OR TO_DAYS(ENDTIME) BETWEEN TO_DAYS(#{sDay}) AND TO_DAYS(LAST_DAY(#{eDay})) OR TO_DAYS(#{sDay}) BETWEEN TO_DAYS(STARTTIME) AND TO_DAYS(ENDTIME))
-			AND WRITER = #{write}
+			AND EMAIL = #{write}
 		ORDER BY STARTTIME ASC
 	</select>
 
@@ -86,6 +86,37 @@
 			NOW(),
 			NOW()
 			)
+	</insert>
+
+	<insert id="payMonthWrite">
+		INSERT INTO PAY_DATA
+		(
+			USER_EMAIL,
+			PAY_DATE,
+			TIME_SALARY,
+			JOB_TIME,
+			FULL_WORKING_PENSION,
+			FAMILY_PENSION,
+			POSITION_PENSION,
+			LONGEVITY_PENSION,
+			TEXES,
+			REGTIME,
+			UPTIME
+		)
+		VALUES
+		(
+		#{user_email},
+		#{pay_date},
+		#{time_salary},
+		#{job_time},
+		#{full_working_pension},
+		#{family_pension},
+		#{position_pension},
+		#{longevity_pension},
+		#{texes},
+		NOW(),
+		NOW()
+		)
 	</insert>
 	
 	<select id="getScheduleFiles" resultType="map">

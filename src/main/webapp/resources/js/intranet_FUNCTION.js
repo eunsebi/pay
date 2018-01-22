@@ -1,10 +1,11 @@
 var sessionCheker = null;
 var scheduleParam = {};
+var payParam = {};
 var imagepath = getContextPath()+"/resources/images";
 var oEditors = [];
-var vo = { 
-			url:getContextPath()+'/home/employee.do', 
-			id:'Employee', 
+var vo = {
+			url:getContextPath()+'/home/employee.do',
+			id:'Employee',
 			seq : "seq", 
 			name : "이름", 
 			phone : "전화번호", 
@@ -264,7 +265,7 @@ function getJSON(vo,param){
 		 var err = textStatus + ", " + error;
 		 console.log( "Request Failed: " + err );
 		 location.href=getContextPath()+'/common/error.do?code='+textStatus;
-	});	
+	});
 }
 
 /**
