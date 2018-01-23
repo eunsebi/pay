@@ -41,9 +41,6 @@ public class UserServiceImpl extends SqlSessionDaoSupport implements UserService
 			//resultMap.put("passwd",encryptor.decode(passwd));
 			resultMap.put("email", dbemail);
 			resultMap.put("passwd", passwd);
-			System.out.println("--------------------------------------- DB Result");
-			System.out.println("email : " + dbemail);
-			System.out.println("passwd : " + passwd);
 		}
 		return resultMap;
 	}

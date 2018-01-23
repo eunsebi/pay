@@ -653,7 +653,8 @@ function gfnGetHolidays(nYear)
  aHoliday[10] = nYear+"/05/05" + "/어린이날"; 
  aHoliday[11] = nYear+"/06/06" + "/현충일";  
  aHoliday[12] = nYear+"/08/15" + "/광복절";   
- aHoliday[13] = nYear+"/12/25" + "/성탄절";   
+ aHoliday[13] = nYear+"/12/25" + "/성탄절";
+ aHoliday[14] = nYear+"/01/22" + "/창립기념일";
  return aHoliday.sort(); 
 }
  /******************************************************************************

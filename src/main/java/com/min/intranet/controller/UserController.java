@@ -41,9 +41,14 @@ public class UserController {
 	private SendMailService sendMailService;
 
 	@RequestMapping(value = "loginPage.do", method = RequestMethod.GET)
-	public String loginPage(Locale locale, Model model) {
+	public String loginPage(Locale locale, Model model, HttpServletRequest request) {
 		logger.info("Welcome loginPage! The client locale is {}.", locale);
-		return "/user/loginPage";
+
+		HttpSession session = request.getSession();
+		String email = (String) session.getAttribute(CommonUtil.SESSION_USER);
+
+		if (email != null) return "/home/main";
+		else return "/user/loginPage";
 	}
 
 	@RequestMapping(value = "session.do", method = RequestMethod.GET)

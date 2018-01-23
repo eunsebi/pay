@@ -185,4 +185,91 @@
 		WHERE SEQ = #{seq}
 		AND WRITER = #{writer}
 	</update>
+
+	<!-- 유저 급여정보 조회 -->
+	<select id="selectUserMonelyDetail" resultType="com.min.intranet.service.PayUserDataVO">
+		<if test='mode == "DETAIL"'>
+			SELECT
+			USER_EMAIL AS writer,
+			PAY_DATE as payDate,
+			FORMAT(TIME_SALARY,0) AS timeSalary,
+			FORMAT(JOB_TIME,0) AS jobTime,
+			FORMAT(FULL_WORKING_PENSION,0) AS fullWorkingPension,
+			FORMAT(FAMILY_PENSION,0) AS familyPension,
+			FORMAT(POSITION_PENSION,0) AS positionPension,
+			FORMAT(LONGEVITY_PENSION,0) AS longevityPension,
+			FORMAT(TEXES,0) AS texes
+			FROM
+			PAY_DATA
+			WHERE
+			USER_EMAIL = #{writer} AND PAY_DATE = #{payDate}
+		</if>
+		<!--</isEqual>-->
+		<!--<isEqual property="mode" compareValue="CAL">-->
+		<if test='mode == "CAL"'>
+			SELECT
+			USER_EMAIL AS writer,
+			PAY_DATE as payDate,
+			TIME_SALARY AS timeSalary,
+			JOB_TIME AS jobTime,
+			FULL_WORKING_PENSION AS fullWorkingPension,
+			FAMILY_PENSION AS familyPension,
+			POSITION_PENSION AS positionPension,
+			LONGEVITY_PENSION AS longevityPension,
+			TEXES AS texes
+			FROM
+			PAY_DATA
+			WHERE
+			USER_EMAIL = #{writer} AND PAY_DATE = #{payDate}
+		</if>
+	</select>
+
+	<!-- 급여 계산 List형 -->
+	<select id="selectListSalaryCalculation" parameterType="java.util.Map" resultType="com.min.intranet.util.EgovMap">
+		SELECT
+		/* 특근 잔업시간 */
+		(SELECT IFNULL (SUM(pay_ottime), 0) FROM PAY WHERE pay_day = '4' AND pay_ot = '1' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_NIGHT_PRO_TIME,
+		/* 잔업시간 */
+		(SELECT IFNULL (SUM(pay_ottime)-SUM_HOLIDAY_NIGHT_PRO_TIME, 0) FROM PAY WHERE pay_ot = '1' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_PRO_TIME,
+		/* 야간 근무일 */
+		(SELECT IFNULL (COUNT(*), 0) FROM PAY WHERE pay_day = '2' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_NIGHT_PRO_DAY,
+		/* 야간수당 시간 */
+		(SELECT IFNULL (SUM(pay_nighttime), 0) FROM PAY WHERE  WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_NIGHT_TIME,
+		/* 특근 근무일 */
+		(SELECT IFNULL (COUNT(*), 0) FROM PAY WHERE pay_day = '3' AND WRITER =#{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_DAY,
+		/* 특근 잔업시간 */
+		(SELECT IFNULL (SUM(pay_ottime), 0) FROM PAY WHERE pay_day = '3' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_PRO_TIME,
+		/* 야간 특근 근무일 */
+		(SELECT COUNT(*) FROM PAY WHERE pay_day = '4' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_NIGHT_DAY
+
+		FROM PAY
+		WHERE 1=1
+		AND WRITER = #{writer}
+
+		<if test='searchMode != ""'>
+			<if test='searchMode == "MONTH"'>
+				<if test='searchMonth != ""'>
+					<if test="searchMonth != ''">
+						AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )
+					</if>
+				</if>
+			</if>
+			<if test='searchMode == "WEEK"'>
+				<![CDATA[
+				AND (
+					( SUBSTRING(STARTTIME,1,8) > #{startime} AND SUBSTRING(STARTTIME,1,8) <= #{endtime})
+				OR
+					( SUBSTRING(ENDTIME,1,8) > #{startime} AND SUBSTRING(STARTTIME,1,8) <= #{endtime})
+					)
+			]]>
+			</if>
+			<if test='searchMode == "DAILY"'>
+				<![CDATA[
+				AND (#{searchDay} BETWEEN SUBSTRING(STARTTIME, 1, 8)  AND SUBSTRING(ENDTIME, 1, 8) )
+			]]>
+			</if>
+		</if>
+
+	</select>
+
 </mapper>

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.min.intranet.core.CommonUtil;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.intranet.service.EtcService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/home")
@@ -34,12 +38,15 @@ public class EtcController {
 	 */
 	@RequestMapping(value = "getEtc.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Map<String, String>> getEtc(Locale locale, Model model, @RequestParam("syear") String syear,
-			@RequestParam("smonth") String smonth, @RequestParam("eyear") String eyear,
-			@RequestParam("emonth") String emonth) throws Exception {
+	public List<Map<String, String>> getEtc(Locale locale, Model model, HttpServletRequest req, @RequestParam("syear") String syear,
+											@RequestParam("smonth") String smonth, @RequestParam("eyear") String eyear,
+											@RequestParam("emonth") String emonth) throws Exception {
 		logger.info("Welcome getEtc! The client locale is {}.", locale);
 
+		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+
 		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("writer", writer);
 		paramMap.put("sDay", syear + "/" + smonth + "/01");
 		paramMap.put("eDay", eyear + "/" + emonth + "/01");
 		List<Map<String, String>> etcMap = etcService.getEtcList(paramMap);

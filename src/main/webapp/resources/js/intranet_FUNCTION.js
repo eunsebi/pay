@@ -117,7 +117,7 @@ function getEtc(){
 		var result = response;
 		var html = '';
 		for(var i = 0 ; i < result.length ; i ++){
-			var  contents = result[i].contents;
+			//var  contents = result[i].contents;
 			var sdate = new Date(result[i].starttime);
 			var edate = new Date(result[i].endtime);
 			html +='<div class="etc-contents">';
@@ -133,7 +133,7 @@ function getEtc(){
 			}
 			html +='</div>';
 			html +='<br>';
-			html +=contents;
+			//html +=contents;
 			html +='</div>';
 		}
 		$('#etc-contents').html(html);
@@ -200,7 +200,7 @@ function getJSON(vo,param){
 				}
 			}
 			
-			userTree.append({ email: result.email , title : result.name+"("+result.email+")", name:result.name});
+			userTree.append({ email: result.eemail , title : result.name+"("+result.email+")", name:result.name});
 			
 			var br = document.createElement("br");
 			$(div).html(spans[0].outerHTML + br.outerHTML + spans[1].outerHTML + br.outerHTML + spans[2].outerHTML + br.outerHTML + spans[3].outerHTML );
@@ -537,6 +537,45 @@ function refrashRow(table, param){
 /*
  * 메일 참조 리스트
  */
+
+function getPay(){
+    var syear = $('#paySyear').val();
+    var smonth = $('#paySmonth').val();
+    $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth}).done(function(response){
+        var result = response;
+        var html = '';
+        /*for(var i = 0 ; i < result.length ; i ++){
+            //var  contents = result[i].contents;
+            //var sdate = new Date(result[i].starttime);
+            //var edate = new Date(result[i].endtime);
+            html +='<div class="pay-contents">';
+            html +='<div class="label label-blue" style="margin:5px;">';
+            //html +=(i+1) +". " +result[i].title;
+            html +='</div>';
+            html +='<br>';
+            html +='<div class="label label-red" style="margin:5px;">';
+           // html +=sdate.getFullYear() + "년 " + (sdate.getMonth()+1) + "월 " + sdate.getDate() + "일";
+            /!*if(sdate.getTime() != edate.getTime()){
+                html +=' ~ ';
+                html +=edate.getFullYear() + "년 " + (edate.getMonth()+1) + "월 " + edate.getDate() + "일";
+            }*!/
+            html +='</div>';
+            html +='<br>';
+            //html +=contents;
+            html +='</div>';
+        }*/
+        html +='<div class="pay-contents">';
+        html +='<div class="label label-blue" style="margin:5px;">';
+        html += result[0].paySum.calHolidayPersion;
+        html +='</div>';
+        html +='<br>';
+        $('#pay-contents').html(html);
+    }).fail(function(jqxhr, textStatus, error){
+        var err = textStatus + ", " + error;
+        console.log( "Request Failed: " + err );
+        location.href=getContextPath()+'/common/error.do?code='+textStatus;
+    });
+}
 
 function addCC(obj){
 	var isCC = false;

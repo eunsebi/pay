@@ -133,7 +133,7 @@
             </div>
         </div>
     </div>
-    <!-- 스케줄등록모달 -->
+    <!-- 근무일 등록모달 -->
     <div id="writeModal" class="msgbox" style="display: none;">
         <div class="head">
             <span>근무 시간 등록</span>
@@ -698,9 +698,36 @@
             </div>
             <!-- Pay_View -->
             <div id="main_Pay" style="display: none;">
-                <div class="group">
-                    <a class="left btn btn-mini btn-gray-black" id="pay-monthtime"><span>급여등록</span>&nbsp;<i class="icon-add-dir"></i></a>
+                <div>
+                    <div class="group">
+                        <a class="left btn btn-mini btn-gray-black" id="pay-monthtime"><span>급여등록</span>&nbsp;<i class="icon-add-dir"></i></a>
+                    </div>
+                    <select id="paySyear">
+                        <script>
+                            var date = new Date();
+                            for (var i = (date.getFullYear() - 1); i > (date.getFullYear() - 2); i--) {
+                                document.write("<option value='" + i + "'>" + i + "년</option>");
+                            }
+                            document.write("<option selected='selected' value='" + date.getFullYear() + "'>" + date.getFullYear() + "월</option>");
+                            for (var i = (date.getFullYear() + 1); i < (date.getFullYear() + 2); i++) {
+                                document.write("<option value='" + i + "'>" + i + "년</option>");
+                            }
+                        </script>
+                    </select>
+                    <select id="paySmonth">
+                        <script>
+                            var date = new Date();
+                            for (var i = 0; i < 12; i++) {
+                                if (i == date.getMonth()) {
+                                    document.write("<option selected='selected' value='" + (i + 1) + "'>" + (i + 1) + "월</option>");
+                                } else {
+                                    document.write("<option value='" + (i + 1) + "'>" + (i + 1) + "월</option>");
+                                }
+                            }
+                        </script>
+                    </select>
                 </div>
+
                 <div id="pay-contents" style="margin-top: 5px;">
 
                 </div>

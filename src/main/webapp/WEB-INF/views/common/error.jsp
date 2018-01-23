@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
-<title>업무 시스템</title>
+<title>급여 관리 시스템</title>
 <link rel="stylesheet" href="<c:url value="/resources/jui/jui.min.css"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/lib/animate.min.css"/>"/>
 <link rel="stylesheet" href="<c:url value="/resources/lib/main.css"/>"/>

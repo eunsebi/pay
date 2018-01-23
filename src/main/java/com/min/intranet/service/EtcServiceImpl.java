@@ -18,13 +18,13 @@ public class EtcServiceImpl extends SqlSessionDaoSupport implements EtcService {
 		
 		for(Map<String, String> map : etcs){
 			String title = map.get("title");
-			String contents = map.get("contents");
+			//String contents = map.get("contents");
 			title = title.replaceAll("<script>","&lt;script&gt;");
 			title = title.replaceAll("</script>","&lt;/script&gt;");
-			contents = contents.replaceAll("<script>","&lt;script&gt;");
-			contents = contents.replaceAll("</script>","&lt;/script&gt;");
+			//contents = contents.replaceAll("<script>","&lt;script&gt;");
+			//contents = contents.replaceAll("</script>","&lt;/script&gt;");
 			map.put("title",title);
-			map.put("contents",contents);
+			//map.put("contents",contents);
 		}
 		
 		return etcs.size()==0?new ArrayList<Map<String,String>>():etcs;

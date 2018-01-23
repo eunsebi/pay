@@ -2,7 +2,7 @@
  * 제이쿼리 영역
  */
 $(function(){
-	getJSON(vo,{seq:1});
+	//getJSON(vo,{seq:1});
 	
 	$('#eText').keydown(function(e){
 		if(e.keyCode == 13){
@@ -548,6 +548,7 @@ $(function(){
 	});
 	getEtc();
 	getFiles();
+	getPay();
 	setInterval(function(){
 		var date = new Date();
 		$('#head-year').text(date.getFullYear());

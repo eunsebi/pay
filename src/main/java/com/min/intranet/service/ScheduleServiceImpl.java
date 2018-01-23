@@ -131,4 +131,14 @@ public class ScheduleServiceImpl extends SqlSessionDaoSupport implements Schedul
 	    return getSqlSession().delete("pay.deleteScheduleFiles", name);
 	}
 
+	@Override
+	public PayUserDataVO selectUserMonelyDetail(Map<String, String> commandMap) {
+		return getSqlSession().selectOne("pay.selectUserMonelyDetail", commandMap);
+	}
+
+	@Override
+	public List selectListSalaryCalculation(Map<String, String> commandMap) {
+		return getSqlSession().selectList("pay.selectListSalaryCalculation", commandMap);
+	}
+
 }

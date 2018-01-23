@@ -33,4 +33,8 @@ public interface ScheduleService {
 	public int scheduleDeleteFiles(Map<String, String> paramMap)throws Exception;
 
 	public int deleteScheduleFiles(String name)throws Exception;
+
+    PayUserDataVO selectUserMonelyDetail(Map<String, String> commandMap);
+
+    List selectListSalaryCalculation(Map<String, String> commandMap);
 }
