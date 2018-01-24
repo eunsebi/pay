@@ -1,39 +1,30 @@
 package com.min.intranet.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.min.intranet.service.EtcService;
+import com.min.intranet.core.CommonUtil;
 import com.min.intranet.service.PayUserDataVO;
+import com.min.intranet.service.ScheduleService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.min.intranet.core.CommonUtil;
-import com.min.intranet.service.ScheduleService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/home")
@@ -159,7 +150,7 @@ public class ScheduleController {
 
 	@RequestMapping(value = "payDay.do", method = RequestMethod.GET)
 	@ResponseBody
-    public Map<String, ?> payDay(Locale locale, HttpServletRequest request,
+    public List<Map<String, String>> payDay(Locale locale, HttpServletRequest request,
 						 /*@RequestParam Map<String, String> commandMap,*/
 						 @RequestParam("syear") String syear,
 						 @RequestParam("smonth") String smonth
@@ -206,20 +197,27 @@ public class ScheduleController {
 		//paramMap.put("eDay", syear + "/" + smonth + "/01");
 
 		// 급여 정보 얻기
-		paramMap.put("mode", "DETAIL");
-		PayUserDataVO result = homeService.selectUserMonelyDetail(paramMap);
-
-		//model.addAttribute("basic", result);
-
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		/*paramMap.put("mode", "DETAIL");
+		PayUserDataVO result = homeService.selectUserMonelyDetail(paramMap);*/
 
 		// 급여계산 메서드 호출
-		resultMap.put("paySum", salaryCalculation(paramMap));
 
-		//HashMap<String, ?> calModel = salaryCalculation(paramMap);
-		//model.addAttribute("salarySum", calModel);
+		//Map<String, Object> resultMap = new HashMap<String, Object>();
 
-		return resultMap;
+		// hashMap으로 받을때
+		/*HashMap<String, ?> calModel = salaryCalculation(paramMap);
+		resultMap.put("paySum", salaryCalculation(paramMap));*/
+
+		// List로 받을때
+		List<Map<String, String>> listResultMap = salaryCalculation(paramMap);
+
+		System.out.println("result : " + listResultMap);
+
+		// json으로 변경 -> string값
+		/*ObjectMapper mapper = new ObjectMapper();
+		resultMap.put("paySum", mapper.writeValueAsString(salaryCalculation(paramMap)));*/
+
+		return listResultMap;
     }
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -429,9 +427,10 @@ public class ScheduleController {
      * @return
      * @throws Exception
      */
-    private HashMap<String, ?> salaryCalculation(Map<String, String> commandMap) throws Exception {
+    private List salaryCalculation(Map<String, String> commandMap) throws Exception {
 
         HashMap<String, String> hm = new HashMap<String, String>();
+		List returnList = new ArrayList();
 
         String str_holidayNightProTime = "sumHolidayNightProTime";	// 야간 특근 잔업시간
         String str_proTime = "sumProTime";							// 주간 잔업시간
@@ -601,7 +600,9 @@ public class ScheduleController {
         hm.put("persionSum", df.format(persionSum));						// 총급여액
         hm.put("total", df.format(calTotal));										// 실지급액
 
-        return hm;
+		returnList.add(hm);
+
+        return returnList;
     }
 
 }

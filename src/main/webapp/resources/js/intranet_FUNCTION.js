@@ -541,7 +541,8 @@ function refrashRow(table, param){
 function getPay(){
     var syear = $('#paySyear').val();
     var smonth = $('#paySmonth').val();
-    $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth}).done(function(response){
+    //$.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth}).done(function(response){
+        $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth},function(response){
         var result = response;
         var html = '';
         /*for(var i = 0 ; i < result.length ; i ++){
@@ -564,9 +565,12 @@ function getPay(){
             //html +=contents;
             html +='</div>';
         }*/
+
         html +='<div class="pay-contents">';
         html +='<div class="label label-blue" style="margin:5px;">';
-        html += result[0].paySum.calHolidayPersion;
+        html += '실지급액 : ' + result[0].total;
+        //html +='<br>';
+            html += '기본급 : ' + result[0].calBasicTime;
         html +='</div>';
         html +='<br>';
         $('#pay-contents').html(html);
