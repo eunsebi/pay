@@ -545,34 +545,31 @@ function getPay(){
         $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth},function(response){
         var result = response;
         var html = '';
-        /*for(var i = 0 ; i < result.length ; i ++){
-            //var  contents = result[i].contents;
-            //var sdate = new Date(result[i].starttime);
-            //var edate = new Date(result[i].endtime);
+        if (result.length == 0) {
+            alert("검색 Data가 없습니다");
+        } else {
             html +='<div class="pay-contents">';
             html +='<div class="label label-blue" style="margin:5px;">';
-            //html +=(i+1) +". " +result[i].title;
+            html += syear + '년 ' + smonth + '월';
             html +='</div>';
             html +='<br>';
             html +='<div class="label label-red" style="margin:5px;">';
-           // html +=sdate.getFullYear() + "년 " + (sdate.getMonth()+1) + "월 " + sdate.getDate() + "일";
-            /!*if(sdate.getTime() != edate.getTime()){
-                html +=' ~ ';
-                html +=edate.getFullYear() + "년 " + (edate.getMonth()+1) + "월 " + edate.getDate() + "일";
-            }*!/
+            html += '실지급액 : ' + result[0].total;
             html +='</div>';
             html +='<br>';
-            //html +=contents;
-            html +='</div>';
-        }*/
-
-        html +='<div class="pay-contents">';
-        html +='<div class="label label-blue" style="margin:5px;">';
-        html += '실지급액 : ' + result[0].total;
-        //html +='<br>';
+            html +='<div class="label-pay" style="margin:5px;">';
             html += '기본급 : ' + result[0].calBasicTime;
-        html +='</div>';
-        html +='<br>';
+            html +='<br>';
+            html += '연장수당 : ' + result[0].calProTime;
+            html +='<br>';
+            html += '특근수당 : ' + result[0].calHolidayPersion;
+            html +='<br>';
+            html += '야간수당 : ' + result[0].calNightPersion;
+            html +='<br>';
+            html += '총급여액 : ' + result[0].persionSum;
+            html +='<br>';
+            html +='</div>';
+        }
         $('#pay-contents').html(html);
     }).fail(function(jqxhr, textStatus, error){
         var err = textStatus + ", " + error;

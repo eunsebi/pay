@@ -148,6 +148,36 @@ public class ScheduleController {
 	}
 
 
+	/**
+	 * 시급정보 불러오기
+	 * @param locale
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "payMonthUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, ?> payMonthUpdate(Locale locale, HttpServletRequest request) throws Exception {
+		logger.info("Welcome payMonthWrite! The client locale is {}.", locale);
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+
+		paramMap.put("user_email", writer);
+		Map<String, ?> resultMap = homeService.payMonthUpdate(paramMap);
+
+		return resultMap;
+	}
+
+	/**
+	 * 급여 계산
+	 * @param locale
+	 * @param request
+	 * @param syear
+	 * @param smonth
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "payDay.do", method = RequestMethod.GET)
 	@ResponseBody
     public List<Map<String, String>> payDay(Locale locale, HttpServletRequest request,
@@ -190,6 +220,8 @@ public class ScheduleController {
 		//sSearchDate = sYear + "-" + sMonth;
 
 		paramMap.put("searchMonth", sYear + "-" + sMonth);
+		paramMap.put("year", sYear);
+		paramMap.put("month", sMonth);
 		paramMap.put("searchMode", "MONTH");
 		paramMap.put("writer", writer);
 		paramMap.put("payDate", sYear+sMonth);
@@ -422,7 +454,7 @@ public class ScheduleController {
 	}
 
     /**
-     * 월별 급여계산
+     * 월별 급여계산 식
      * @param commandMap
      * @return
      * @throws Exception
@@ -479,128 +511,167 @@ public class ScheduleController {
 
         List resultList = homeService.selectListSalaryCalculation(commandMap);
 
-        for (int i = 0; i < 1; i++) {
+		/*String aa = commandMap.get("month");
+		String cc = "";
+		Integer bb = Integer.parseInt(aa);
+		bb -=1;
 
-            //Map<String, ?> map = (Map<String, ?>) resultList.get(i);
-            String calculationList = resultList.get(i).toString();
+		if (bb < 0) {
+			if(bb < 9) {
+				aa = Integer.toString(bb);
+				cc = "0"+ Integer.parseInt(aa) ;
+			}
 
-            int int_holidayNightProTimeLength = calculationList.indexOf(str_holidayNightProTime);
-            int int_proTimeLength = calculationList.indexOf(str_proTime);
-            int int_nightProDayLength = calculationList.indexOf(str_nightProDay);
-            int int_nightTimeLength = calculationList.indexOf(str_nightTime);
-            int int_holidayDayLength = calculationList.indexOf(str_holidayDay);
-            int int_holidayProTimeLength = calculationList.indexOf(str_holidayProTime );
-            int int_holidayNightDayLength = calculationList.indexOf(str_holidayNightDay);
+			System.out.println("aaaaa : " + cc);
 
-            //특근 잔업시간
-            str_holidayNightProTime_Sum = calculationList.substring(
-                    int_holidayNightProTimeLength+str_holidayNightProTime.length()+1,
-                    calculationList.substring(int_holidayNightProTimeLength).indexOf(str_proTime)-1);
-            num_holidayNightProTime_Sum = Float.parseFloat(str_holidayNightProTime_Sum);
+			commandMap.put("searchMonth", commandMap.get("year") + "-" + cc);
 
-            //잔업 시간
-            str_proTime_Sum = calculationList.substring(
-                    int_proTimeLength+str_proTime.length()+1,
-                    calculationList.substring(int_holidayNightProTimeLength).indexOf(str_nightProDay)-1);
-            num_proTime_Sum = Float.parseFloat(str_proTime_Sum);
+			resultList.add(homeService.selectListSalaryCalculation(commandMap));
+		}
 
-            str_nightProDay_Sum = calculationList.substring(
-                    int_nightProDayLength+str_nightProDay.length()+1,
-                    calculationList.substring(int_holidayNightProTimeLength).indexOf(str_nightTime)-1);
-            num_nightProDay_Sum = Float.parseFloat(str_nightProDay_Sum);
+		System.out.println("resultList size: " + resultList);*/
 
-            //야간 시간
-            str_nightTime_Sum = calculationList.substring(
-                    int_nightTimeLength+str_nightTime.length()+1,
-                    calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayDay)-1);
-            num_nightTime_Sum = Float.parseFloat(str_nightTime_Sum);
+        if(resultList.size() != 0) {
 
-            //야간 특근 근무일
-            str_holidayDay_Sum = calculationList.substring(
-                    int_holidayDayLength+str_holidayDay.length()+1,
-                    calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayProTime)-1);
-            num_holidayDay_Sum = Float.parseFloat(str_holidayDay_Sum);
+			for (int i = 0; i < 1; i++) {
 
-            // 특근 잔업시간
-            str_holidayProTime_Sum = calculationList.substring(
-                    int_holidayProTimeLength+str_holidayProTime.length()+1,
-                    calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayNightDay)-1);
-            num_holidayProTime_Sum = Float.parseFloat(str_holidayProTime_Sum);
+				//Map<String, ?> map = (Map<String, ?>) resultList.get(i);
+				String calculationList = resultList.get(i).toString();
 
-            str_holidayNightDay_Sum = calculationList.substring(
-                    int_holidayNightDayLength+str_holidayNightDay.length()+1,
-                    calculationList.length()-1);
-            num_holidayNightDay_Sum = Float.parseFloat(str_holidayNightDay_Sum);
+				int int_holidayNightProTimeLength = calculationList.indexOf(str_holidayNightProTime);
+				int int_proTimeLength = calculationList.indexOf(str_proTime);
+				int int_nightProDayLength = calculationList.indexOf(str_nightProDay);
+				int int_nightTimeLength = calculationList.indexOf(str_nightTime);
+				int int_holidayDayLength = calculationList.indexOf(str_holidayDay);
+				int int_holidayProTimeLength = calculationList.indexOf(str_holidayProTime);
+				int int_holidayNightDayLength = calculationList.indexOf(str_holidayNightDay);
 
-        }
+				//특근 잔업시간
+				str_holidayNightProTime_Sum = calculationList.substring(
+						int_holidayNightProTimeLength + str_holidayNightProTime.length() + 1,
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_proTime) - 1);
+				num_holidayNightProTime_Sum = Float.parseFloat(str_holidayNightProTime_Sum);
 
-        //String str_proTime = "sumProTime";							// 주간 잔업시간
-        //String str_nightProDay ="sumNightProDay";					// 야간 근무일
-        //String str_nightTime = "sumNightTime";						// 야간 잔업시간
-        //String str_holidayDay = "sumHolidayDay";					// 특근 근무일
-        //String str_holidayProTime = "sumHolidayProTime";			// 특근 잔업시간
-        //String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
-        //String str_holidayHightProTime = "sumHolidayHightProTime";	// 야간 특근 잔업시간
+				//잔업 시간
+				str_proTime_Sum = calculationList.substring(
+						int_proTimeLength + str_proTime.length() + 1,
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_nightProDay) - 1);
+				num_proTime_Sum = Float.parseFloat(str_proTime_Sum);
 
-        // 잔업수당 시급
-        float jansu = Float.parseFloat(result.getTimeSalary())      // 시급
-                + (Float.parseFloat(result.getLongevityPension())   // 근속수당
-                / Float.parseFloat(result.getJobTime()))           // 근무시간
-                + (Float.parseFloat(result.getPositionPension())   // 직책수당
-                / Float.parseFloat(result.getJobTime()));           // 근무시간
+				str_nightProDay_Sum = calculationList.substring(
+						int_nightProDayLength + str_nightProDay.length() + 1,
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_nightTime) - 1);
+				num_nightProDay_Sum = Float.parseFloat(str_nightProDay_Sum);
+
+				//야간 시간
+				str_nightTime_Sum = calculationList.substring(
+						int_nightTimeLength + str_nightTime.length() + 1,
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayDay) - 1);
+				num_nightTime_Sum = Float.parseFloat(str_nightTime_Sum);
+
+				//야간 특근 근무일
+				str_holidayDay_Sum = calculationList.substring(
+						int_holidayDayLength + str_holidayDay.length() + 1,
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayProTime) - 1);
+				num_holidayDay_Sum = Float.parseFloat(str_holidayDay_Sum);
+
+				// 특근 잔업시간
+				str_holidayProTime_Sum = calculationList.substring(
+						int_holidayProTimeLength + str_holidayProTime.length() + 1,
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayNightDay) - 1);
+				num_holidayProTime_Sum = Float.parseFloat(str_holidayProTime_Sum);
+
+				str_holidayNightDay_Sum = calculationList.substring(
+						int_holidayNightDayLength + str_holidayNightDay.length() + 1,
+						calculationList.length() - 1);
+				num_holidayNightDay_Sum = Float.parseFloat(str_holidayNightDay_Sum);
+
+			}
+
+			//String str_proTime = "sumProTime";							// 주간 잔업시간
+			//String str_nightProDay ="sumNightProDay";					// 야간 근무일
+			//String str_nightTime = "sumNightTime";						// 야간 잔업시간
+			//String str_holidayDay = "sumHolidayDay";					// 특근 근무일
+			//String str_holidayProTime = "sumHolidayProTime";			// 특근 잔업시간
+			//String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
+			//String str_holidayHightProTime = "sumHolidayHightProTime";	// 야간 특근 잔업시간
+
+			// 잔업수당 시급
+			float jansu = Float.parseFloat(result.getTimeSalary())      // 시급
+					+ (Float.parseFloat(result.getLongevityPension())   // 근속수당
+					/ Float.parseFloat(result.getJobTime()))           // 근무시간
+					+ (Float.parseFloat(result.getPositionPension())   // 직책수당
+					/ Float.parseFloat(result.getJobTime()));           // 근무시간
 		/*String aa = af.format(a);
 		float jansu = Float.parseFloat(aa);
 		System.out.println("잔업 시급 : " +jansu);*/
-        System.out.println("잔업 시급 : " + jansu);
+			System.out.println("잔업 시급 : " + jansu);
 
-        float calBasicTime = Float.parseFloat(result.getJobTime()) * Float.parseFloat(result.getTimeSalary());		//기본급
-        float calHolidayDay = num_holidayDay_Sum + num_holidayNightDay_Sum;											//특근 근무일
-        float calHolidayPro = num_holidayProTime_Sum + num_holidayNightProTime_Sum;									// 특근 잔업시간
+			float calBasicTime = Float.parseFloat(result.getJobTime()) * Float.parseFloat(result.getTimeSalary());        //기본급
+			float calHolidayDay = num_holidayDay_Sum + num_holidayNightDay_Sum;                                            //특근 근무일
+			float calHolidayPro = num_holidayProTime_Sum + num_holidayNightProTime_Sum;                                    // 특근 잔업시간
 
-		System.out.println("기본급 : " + calBasicTime);
+			System.out.println("기본급 : " + calBasicTime);
 
 		/*LOGGER.info("num_holidayProTime_Sum : {} ", num_holidayProTime_Sum);
 		LOGGER.info("num_holidayNightProTime_Sum : {} ", num_holidayNightProTime_Sum);
 		LOGGER.info("특근 잔업시간 : {} ", calHolidayPro);*/
 
-        if (num_holidayProTime_Sum != 0) {
-            num_proTime_Sum = num_proTime_Sum - num_holidayProTime_Sum;
-        }
+			if (num_holidayProTime_Sum != 0) {
+				num_proTime_Sum = num_proTime_Sum - num_holidayProTime_Sum;
+			}
 
-        float calProTime = (jansu * num_proTime_Sum * Float.parseFloat("1.5")) +			// 잔업
-                (jansu * calHolidayPro * Float.parseFloat("2")); 							// 특근 잔업
+			float calProTime = (jansu * num_proTime_Sum * Float.parseFloat("1.5")) +            // 잔업
+					(jansu * calHolidayPro * Float.parseFloat("2"));                            // 특근 잔업
 
-        float calHolidayPersion = calHolidayDay * 8 * jansu * Float.parseFloat("1.5");	// 특근수당
-        float calNightPersion = num_nightTime_Sum * (jansu * Float.parseFloat("0.5")) ;	// 야간수당
+			float calHolidayPersion = calHolidayDay * 8 * jansu * Float.parseFloat("1.5");    // 특근수당
+			float calNightPersion = num_nightTime_Sum * (jansu * Float.parseFloat("0.5"));    // 야간수당
 
-        float persionSum = calBasicTime + calProTime + calHolidayPersion + calNightPersion
-                + Float.parseFloat(result.getFamilyPension()) + Float.parseFloat(result.getFullWorkingPension())
-                + Float.parseFloat(result.getPositionPension()) + Float.parseFloat(result.getLongevityPension());							// 급여 합계
+			float persionSum = calBasicTime + calProTime + calHolidayPersion + calNightPersion
+					+ Float.parseFloat(result.getFamilyPension()) + Float.parseFloat(result.getFullWorkingPension())
+					+ Float.parseFloat(result.getPositionPension()) + Float.parseFloat(result.getLongevityPension());                            // 급여 합계
 
-		System.out.println("총급여 : " + persionSum);
-		System.out.println("세금 : " + result.getTexes());
+			System.out.println("총급여 : " + persionSum);
+			System.out.println("세금 : " + result.getTexes());
         /*System.out.println("야간근무시간 : " + num_nightTime_Sum);
         System.out.println("잔업 수당 : " + calProTime);
 		System.out.println("특근수당 : " + calHolidayPersion);
 		System.out.println("야간수당 : " + calNightPersion);*/
-        float calTotal = persionSum - Float.parseFloat(result.getTexes());					// 실지급액
-        //float calnightTime = num_nightTime_Sum * result.getTimeSalary();
+			float calTotal = persionSum - Float.parseFloat(result.getTexes());                    // 실지급액
+			//float calnightTime = num_nightTime_Sum * result.getTimeSalary();
 
-		System.out.println("실지급액 : " + calTotal);
+			System.out.println("실지급액 : " + calTotal);
 
-        hm.put("calBasicTime", df.format(calBasicTime));					// 기본급
-        hm.put("calProDay", dff.format(num_proTime_Sum));					// 주간 잔업시간
-        hm.put("calProTime", dff.format(calProTime));						// 연장수당
-        hm.put("calNightProDay", df.format(num_nightProDay_Sum));			// 야간 근무일
-        hm.put("calHolidayDay", df.format(calHolidayDay));					// 특근 근무일(야간 특근 포함)
-        hm.put("calHolidayPro", dff.format(calHolidayPro));					// 특근 잔업시간(야특 포함)
-        hm.put("calNightProTime", dff.format(num_nightTime_Sum));			// 야간 잔업시간
-        hm.put("calHolidayPersion", df.format(calHolidayPersion));			// 특근수당
-        hm.put("calNightPersion", df.format(calNightPersion));				// 야간수당
-        hm.put("persionSum", df.format(persionSum));						// 총급여액
-        hm.put("total", df.format(calTotal));										// 실지급액
+			hm.put("calBasicTime", df.format(calBasicTime));                    // 기본급
+			hm.put("calProDay", dff.format(num_proTime_Sum));                    // 주간 잔업시간
+			hm.put("calProTime", dff.format(calProTime));                        // 연장수당
+			hm.put("calNightProDay", df.format(num_nightProDay_Sum));            // 야간 근무일
+			hm.put("calHolidayDay", df.format(calHolidayDay));                    // 특근 근무일(야간 특근 포함)
+			hm.put("calHolidayPro", dff.format(calHolidayPro));                    // 특근 잔업시간(야특 포함)
+			hm.put("calNightProTime", dff.format(num_nightTime_Sum));            // 야간 잔업시간
+			hm.put("calHolidayPersion", df.format(calHolidayPersion));            // 특근수당
+			hm.put("calNightPersion", df.format(calNightPersion));                // 야간수당
+			hm.put("persionSum", df.format(persionSum));                        // 총급여액
+			hm.put("total", df.format(calTotal));                                        // 실지급액
 
-		returnList.add(hm);
+			returnList.add(hm);
+		} else {
+			System.out.println("급여 등록이 없다.");
+
+			hm.put("calBasicTime", df.format(0));                    // 기본급
+			hm.put("calProDay", dff.format(0));                    // 주간 잔업시간
+			hm.put("calProTime", dff.format(0));                        // 연장수당
+			hm.put("calNightProDay", df.format(0));            // 야간 근무일
+			hm.put("calHolidayDay", df.format(0));                    // 특근 근무일(야간 특근 포함)
+			hm.put("calHolidayPro", dff.format(0));                    // 특근 잔업시간(야특 포함)
+			hm.put("calNightProTime", dff.format(0));            // 야간 잔업시간
+			hm.put("calHolidayPersion", df.format(0));            // 특근수당
+			hm.put("calNightPersion", df.format(0));                // 야간수당
+			hm.put("persionSum", df.format(0));                        // 총급여액
+			hm.put("total", df.format(0));                                        // 실지급액
+
+			resultList.add(hm);
+		}
 
         return returnList;
     }

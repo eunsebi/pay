@@ -141,4 +141,9 @@ public class ScheduleServiceImpl extends SqlSessionDaoSupport implements Schedul
 		return getSqlSession().selectList("pay.selectListSalaryCalculation", commandMap);
 	}
 
+	@Override
+	public Map<String, String> payMonthUpdate(Map<String, String> paramMap) {
+		return getSqlSession().selectOne("pay.payMonthUpdate", paramMap);
+	}
+
 }

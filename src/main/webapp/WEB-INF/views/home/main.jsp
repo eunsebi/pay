@@ -454,6 +454,64 @@
             </div>
         </div>
     </div>
+    <!-- 시급 등록 모달 -->
+    <div id="payupdateModal" class="msgbox" style="display: none;">
+        <div class="head">
+            <span id="pay-updatetitle">시급 수정하기</span>
+        </div>
+        <div class="body">
+            <table border="0">
+                <tr>
+                    <td>시급 :</td>
+                    <td>
+                        <input id="time_salary" name="time_salary" type="text" value="7500" size="10" maxlength="10"/>
+                    </td>
+                    <td>근무시간 :</td>
+                    <td>
+                        <input id="job_time" name="job_time" type="text" value="240" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>만근수당 :</td>
+                    <td width="50">
+                        <input id="full_working_pension" name="full_working_pension" type="text" value="50000" size="10" maxlength="10"/>
+                    </td>
+                    <td>가족수당 :</td>
+                    <td>
+                        <input id="family_pension" name="family_pension" type="text" value="20000" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>근속수당 :</td>
+                    <td width="50">
+                        <input id="longevity_pension" name="longevity_pension" type="text" value="50000" size="10" maxlength="10"/>
+                    </td>
+                    <td>세금예상액 :</td>
+                    <td>
+                        <input id="texes" name="texes" type="text" value="400000" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>직책수당 :</td>
+                    <td width="50">
+                        <input id="position_pension" name="position_pension" type="text" value="100000" size="10" maxlength="10"/>
+                    </td>
+                    <td>등록월  :</td>
+                    <td>
+                        <input id="pay_date" name="pay_date" type="text" value="201801" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td height="20" colspan="4">&nbsp;</td>
+                </tr>
+            </table>
+            <div style="text-align: center;">
+                <a href="#" id="payBtn" class="btn btn-gray btn-small">저장</a>
+                <a href="#" id="payClose" class="btn btn-gray btn-small">Close</a>
+            </div>
+        </div>
+    </div>
     <!-- 내용영역 -->
     <div class="panel main-container">
         <div class="head">
@@ -700,7 +758,8 @@
             <div id="main_Pay" style="display: none;">
                 <div>
                     <div class="group">
-                        <a class="left btn btn-mini btn-gray-black" id="pay-monthtime"><span>급여등록</span>&nbsp;<i class="icon-add-dir"></i></a>
+                        <a class="left btn btn-mini btn-gray-black" id="pay-monthtime"><span>시급등록</span>&nbsp;<i class="icon-add-dir"></i></a>
+                        <a class="left btn btn-mini btn-gray-black" id="pay-monthtimeUpdate"><span>시급수정</span>&nbsp;<i class="icon-add-dir"></i></a>
                     </div>
                     <select id="paySyear">
                         <script>
@@ -726,6 +785,7 @@
                             }
                         </script>
                     </select>
+                    <a class="left btn btn-mini btn-gray-black" id="pay-search" onclick="getPay()"><span>검색</span></a>
                 </div>
 
                 <div id="pay-contents" style="margin-top: 5px;">

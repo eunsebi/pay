@@ -88,6 +88,7 @@
 			)
 	</insert>
 
+	<!--시급정보 등록-->
 	<insert id="payMonthWrite">
 		INSERT INTO PAY_DATA
 		(
@@ -118,6 +119,22 @@
 		NOW()
 		)
 	</insert>
+
+	<!--시급정보 등록-->
+	<select id="payMonthUpdate" resultType="map">
+		SELECT
+		USER_EMAIL,
+		PAY_DATE,
+		TIME_SALARY,
+		JOB_TIME,
+		FULL_WORKING_PENSION,
+		FAMILY_PENSION,
+		POSITION_PENSION,
+		LONGEVITY_PENSION,
+		TEXES
+		FROM PAY_DATA
+		WHERE USER_EMAIL = #{user_email}
+	</select>
 	
 	<select id="getScheduleFiles" resultType="map">
 		SELECT 

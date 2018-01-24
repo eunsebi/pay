@@ -36,7 +36,9 @@ public class HomeController {
 	 */
     	logger.info("Welcome main! The client locale is {}.", locale);
 		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
-    	return "/home/main";
+
+		if (writer == null) return "redirect:/user/loginPage.do";
+		else return "/home/main";
     }
 
 }

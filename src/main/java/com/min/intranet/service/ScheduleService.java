@@ -37,4 +37,6 @@ public interface ScheduleService {
     PayUserDataVO selectUserMonelyDetail(Map<String, String> commandMap);
 
     List selectListSalaryCalculation(Map<String, String> commandMap);
+
+    Map<String,String> payMonthUpdate(Map<String, String> paramMap);
 }
