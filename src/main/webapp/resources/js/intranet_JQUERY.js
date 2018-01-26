@@ -296,7 +296,7 @@ $(function(){
 		}
 	});
 
-	$('#schcalendar').fullCalendar({
+    $('#schcalendar').fullCalendar({
 		header: {
 			left: ' ',
 			center: 'prev title next',
@@ -328,6 +328,8 @@ $(function(){
 	            },
 	            success: function(response) {
 	            	getPayDay();
+	            	//alert("syear : " + (start.getFullYear()) + " month : " + start.getMonth() + " end year : " + end.getFullYear() + " end month " + end.getMonth());
+	            	getPay(end.getFullYear(),end.getMonth());
 	                var events = [];
 	                for(var i = 0 ; i < response.length ; i ++){
 	                	var color;
@@ -501,12 +503,13 @@ $(function(){
     });
 
     $('#payBtn').click(function(){
-        var time_salary = $('#time_salary').val();
+        var timeSalary = $('#time_salary').val();
         var job_time = $('#job_time').val();
         var full_working_pension = $('#full_working_pension').val();
         var family_pension = $('#family_pension').val();
         var texes = $('#texes').val();
         var position_pension = $('#position_pension').val();
+        var payDate = $('#pay_date').val();
 
 		/*payParam.time_salary=time_salary;
 		payParam.job_time=job_time;
@@ -515,32 +518,56 @@ $(function(){
 		payParam.texes=texes;
 		payParam.position_pension=position_pension;*/
 
-		var url = getContextPath()+'/home/payMonthWrite.do';
+        if(timeSalary == ''){
+            alert('시급을 입력하세요.');
+            $('#time_salary').val('');
+            $('#time_salary').focus();
+        } else if(payDate == ''){
+            alert('시급 등록 월을 입력하세요.');
+            $('#pay_date').val('');
+            $('#pay_date').focus();
+        } else {
 
-		/*if(payParam.seq > 0){
-			url = getContextPath()+'/home/payMonthUpdate.do';
-		}*/
+            var url = getContextPath() + '/home/payMonthWrite.do';
 
-		$.ajax({
-			url : url,
-            //url : getContextPath()+"/home/payMonthWrite.do",
-			//data : payParam,
-            data : {
-				time_salary : $('#time_salary').val(),
-				job_time : $('#job_time').val(),
-				full_working_pension : $('#full_working_pension').val(),
-                family_pension : $('#family_pension').val(),
-                texes : $('#texes').val(),
-                position_pension : $('#position_pension').val(),
-                longevity_pension : $('#longevity_pension').val(),
-                pay_date : $('#pay_date').val()
-			},
-			type : 'post',
-			success : function(response){
-				//alert(JSON.parse(response).msg);
-                fileModal.hide();
-			}
-		});
+            /*if(payParam.seq > 0){
+                url = getContextPath()+'/home/payMonthUpdate.do';
+            }*/
+
+            $.ajax({
+                url: url,
+                //url : getContextPath()+"/home/payMonthWrite.do",
+                //data : payParam,
+                data: {
+                    time_salary: timeSalary,
+                    job_time: $('#job_time').val(),
+                    full_working_pension: $('#full_working_pension').val(),
+                    family_pension: $('#family_pension').val(),
+                    texes: $('#texes').val(),
+                    position_pension: $('#position_pension').val(),
+                    longevity_pension: $('#longevity_pension').val(),
+                    pay_date: payDate
+                },
+                type: 'post',
+                success: function (response) {
+                    alert("res : " + JSON.parse(response).msg);
+                    alert("res2 : " + response.error);
+                    if(response.error == '' || response.error == null || response.error == 'undefined') {
+                        //alert(JSON.parse(response).msg);
+                        alert("완료");
+                        fileModal.hide();
+					} else {
+                        alert("해당일은 이미 등록이 되어있습니다!!!!!.");
+                        alert(response.error);
+                        fileModal.show();
+                        $('#pay_date').focus();
+                    }
+                },
+                error : function(response,txt){
+                    location.href = getContextPath()+"/common/error.do?error="+txt;
+                }
+            });
+        }
     });
 
 	$('#mailClose').click(function(){
@@ -561,6 +588,7 @@ $(function(){
 				$(this).addClass('active');
 				$('#'+ $child.attr('title')).show();
 				if(id == 'tab_View'){
+					//getPay();
 					$('#schcalendar').fullCalendar('refetchEvents');
 				}
 			}else{
@@ -571,7 +599,7 @@ $(function(){
 	});
 	getEtc();
 	getFiles();
-	getPay();
+	//getPay();
 	setInterval(function(){
 		var date = new Date();
 		$('#head-year').text(date.getFullYear());

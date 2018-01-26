@@ -146,4 +146,9 @@ public class ScheduleServiceImpl extends SqlSessionDaoSupport implements Schedul
 		return getSqlSession().selectOne("pay.payMonthUpdate", paramMap);
 	}
 
+	@Override
+	public int payMonthEkkor(Map<String, String> paramMap) {
+		return getSqlSession().selectOne("pay.payMonthEkkor", paramMap);
+	}
+
 }

@@ -135,6 +135,14 @@
 		FROM PAY_DATA
 		WHERE USER_EMAIL = #{user_email}
 	</select>
+
+	<!-- 시급 등록월 체크 -->
+	<select id="payMonthEkkor" resultType="int">
+		SELECT
+			COUNT(PAY_DATE)
+		FROM PAY_DATA
+		WHERE USER_EMAIL = #{user_email} AND PAY_DATE = #{pay_date}
+	</select>
 	
 	<select id="getScheduleFiles" resultType="map">
 		SELECT 

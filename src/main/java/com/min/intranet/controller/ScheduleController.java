@@ -142,8 +142,14 @@ public class ScheduleController {
 		paramMap.put("user_email", writer);
 		paramMap.put("pay_date", pay_date);
 
-		resultMap.put("resultCnt", homeService.payMonthWrite(paramMap));
+		Integer count = homeService.payMonthEkkor(paramMap);
 
+		if (count > 0) {
+            resultMap.put("error", "해당일은 이미 등록 되어있습니다.");
+            //paramMap.put("error", "10MB 이하의 파일만 업로드 가능합니다.");
+        } else {
+            resultMap.put("resultCnt", homeService.payMonthWrite(paramMap));
+        }
 		return resultMap;
 	}
 

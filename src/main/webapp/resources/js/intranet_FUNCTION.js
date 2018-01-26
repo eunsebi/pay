@@ -538,15 +538,18 @@ function refrashRow(table, param){
  * 메일 참조 리스트
  */
 
-function getPay(){
-    var syear = $('#paySyear').val();
+function getPay(year,month){
+    var syear = year;
+    var smonth = month;
+    /*var syear = $('#paySyear').val();
     var smonth = $('#paySmonth').val();
-    //$.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth}).done(function(response){
-        $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth},function(response){
+        $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth},function(response){*/
+		$.getJSON(getContextPath()+'/home/payDay.do',{syear:year,smonth:month},function(response){
         var result = response;
         var html = '';
         if (result.length == 0) {
-            alert("검색 Data가 없습니다");
+            alert(smonth + "월 급여정보가 등록이 안되었거나 근무 기록이 없습니다.");
+            fileModal.show();
         } else {
             html +='<div class="pay-contents">';
             html +='<div class="label label-blue" style="margin:5px;">';

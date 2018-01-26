@@ -1,4 +1,4 @@
-package com.min.intranet.core;
+package com.min.intranet.controller;
 
 import java.util.HashMap;
 import java.util.Locale;
