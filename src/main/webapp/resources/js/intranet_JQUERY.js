@@ -550,17 +550,14 @@ $(function(){
                 },
                 type: 'post',
                 success: function (response) {
-                    alert("res : " + JSON.parse(response).msg);
-                    alert("res2 : " + response.error);
-                    if(response.error == '' || response.error == null || response.error == 'undefined') {
-                        //alert(JSON.parse(response).msg);
-                        alert("완료");
-                        fileModal.hide();
-					} else {
+                    response = JSON.parse(response);
+                    if(response.error == 'error' || response.error == null || response.error == 'undefined') {
                         alert("해당일은 이미 등록이 되어있습니다!!!!!.");
-                        alert(response.error);
                         fileModal.show();
                         $('#pay_date').focus();
+					} else {
+                        //alert(JSON.parse(response).msg);
+                        fileModal.hide();
                     }
                 },
                 error : function(response,txt){

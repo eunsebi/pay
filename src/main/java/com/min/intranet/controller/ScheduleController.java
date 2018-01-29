@@ -144,11 +144,18 @@ public class ScheduleController {
 
 		Integer count = homeService.payMonthEkkor(paramMap);
 
-		if (count > 0) {
-            resultMap.put("error", "해당일은 이미 등록 되어있습니다.");
+		System.out.println("conut : " + count);
+
+		if (count == 0) {
+			System.out.println("등록했다.......");
+			Integer writeCnt = homeService.payMonthWrite(paramMap);
+			System.out.println("resultCnt : " +writeCnt );
+			resultMap.put("resultCnt", writeCnt);
+			resultMap.put("error", "ok");
             //paramMap.put("error", "10MB 이하의 파일만 업로드 가능합니다.");
         } else {
-            resultMap.put("resultCnt", homeService.payMonthWrite(paramMap));
+			System.out.println("이미 등록이 되어있다.....");
+			resultMap.put("error", "error");
         }
 		return resultMap;
 	}
