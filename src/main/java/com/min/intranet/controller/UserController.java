@@ -77,7 +77,7 @@ public class UserController {
 		Map<String, Object> userMap = new HashMap<String, Object>();
 		HttpSession session = req.getSession();
 
-		if (adminEmail.equals(email) && adminPass.equals(passwd)) {
+		if (adminEmail.equals(email)) {
 			paramMap.put("email", adminEmail);
 			if (userService.getUser(paramMap).isEmpty()) {
 				paramMap.put("email", adminEmail);

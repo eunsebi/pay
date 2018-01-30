@@ -484,6 +484,7 @@ public class ScheduleController {
         String str_holidayDay = "sumHolidayDay";					// 특근 근무일
         String str_holidayProTime = "sumHolidayProTime";			// 특근 잔업시간
         String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
+		String str_paylatetime = "sumPayLatetime";					// 지각/조퇴 시간
 
         // DB -> String 받아오는 함수
         String str_proTime_Sum;
@@ -493,6 +494,7 @@ public class ScheduleController {
         String str_holidayProTime_Sum;
         String str_holidayNightDay_Sum;
         String str_holidayNightProTime_Sum;
+		String str_paylatetime_sum;
 
         // String -> Float 변환용(근무시간 합계
         Float num_proTime_Sum = null;
@@ -502,6 +504,7 @@ public class ScheduleController {
         Float num_holidayProTime_Sum = null;
         Float num_holidayNightDay_Sum = null;
         Float num_holidayNightProTime_Sum = null;
+		Float num_paylatetime_sum = null;
 
         DecimalFormat df = new DecimalFormat("#,###");
         DecimalFormat dff = new DecimalFormat("#,###.#");
@@ -558,6 +561,7 @@ public class ScheduleController {
 				int int_holidayDayLength = calculationList.indexOf(str_holidayDay);
 				int int_holidayProTimeLength = calculationList.indexOf(str_holidayProTime);
 				int int_holidayNightDayLength = calculationList.indexOf(str_holidayNightDay);
+				//int int_paylatetimeLength = calculationList.indexOf(str_paylatetime);
 
 				//특근 잔업시간
 				str_holidayNightProTime_Sum = calculationList.substring(
