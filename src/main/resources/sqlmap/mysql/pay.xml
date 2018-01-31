@@ -30,6 +30,7 @@
 			EMAIL as email,
 			WRITER as writer,
 			TITLE as title,
+			contents as contents,
 			STARTTIME as starttime,
 			ENDTIME as endtime
 		FROM PAY_VIEW
@@ -44,6 +45,7 @@
 			EMAIL as email,
 			WRITER as writer,
 			TITLE as title,
+			contents as contents,
 			STARTTIME as starttime,
 			ENDTIME as endtime,
 			REGTIME as regtime,
@@ -59,6 +61,7 @@
 				SEQ,
 				WRITER,
 				TITLE,
+				contents,
 				pay_day,
 				pay_ot,
 				pay_ottime,
@@ -74,7 +77,8 @@
 			(
 			#{seq},
 			#{writer},
-				#{title},
+			#{title},
+			#{contents},
 			#{pay_day},
 			#{pay_ot},
 			#{pay_ottime},
@@ -202,10 +206,12 @@
 	<update id="update">
 		UPDATE PAY
 		SET TITLE = #{title},
-			CONTENTS = #{contents},
-			STARTTIME = #{starttime},
-			ENDTIME = #{endtime},
-			ETC_YN = #{etcYn},
+			contents = #{contents},
+			pay_day = #{pay_day},
+			pay_ot = #{pay_ot},
+			pay_ottime = #{pay_ottime},
+			pay_latetime = #{pay_latetime},
+			pay_nighttime = #{pay_nighttime},
 			UPTIME = NOW()
 		WHERE SEQ = #{seq}
 		AND WRITER = #{writer}

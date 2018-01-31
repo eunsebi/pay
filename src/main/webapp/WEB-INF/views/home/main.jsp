@@ -218,11 +218,11 @@
                         공유 여부 : <input type="checkbox" id="etcYn"><font color="red">(체크시 Etc 에 표시 되지 않습니다.)</font>
                     </td>
                 </tr>--%>
-                <%--<tr>
+                <tr>
                     <td colspan="4">
-                        <textarea class="input" id="contents" name="contents" style="width: 610px;height: 300px;" placeholder="내용"></textarea>
+                        <textarea class="input" id="contents" name="contents" style="width: 300px;height: 100px;" placeholder="내용"></textarea>
                     </td>
-                </tr>--%>
+                </tr>
                 <tr>
                     <td height="20" colspan="4">&nbsp;</td>
                 </tr>
@@ -749,7 +749,7 @@
             <div id="main_View" style="display: block;">
                 <div class="group">
                     <a class="left btn btn-mini btn-gray-black" id="pay-monthtime"><span>시급등록</span>&nbsp;<i class="icon-add-dir"></i></a>
-                    <a class="left btn btn-mini btn-gray-black" id="pay-monthtimeUpdate"><span>시급수정</span>&nbsp;<i class="icon-add-dir"></i></a>
+                    <a class="left btn btn-mini btn-gray-black" id="pay-monthtimView"><span>시급수정</span>&nbsp;<i class="icon-add-dir"></i></a>
                     <a class="left btn btn-mini btn-gray-black" id="sview-refresh"><span>새로고침</span>&nbsp;<i class="icon-refresh"></i></a>
                     (날짜의 빈공간을 클릭하면 스케줄을 등록 할 수 있습니다.)
                 </div>

@@ -275,6 +275,7 @@ public class ScheduleController {
 			@RequestParam("title") String title, @RequestParam("endtime") String endtime,
 			@RequestParam("pay_day") String pay_day, @RequestParam("pay_ot") String pay_ot,
 			@RequestParam("pay_ottime") String pay_ottime,
+											 @RequestParam("contents") String contents,
 			@RequestParam("pay_latetime") String pay_latetime,
 			@RequestParam("pay_nighttime") String pay_nighttime,
 			@RequestParam("starttime") String starttime,
@@ -292,6 +293,7 @@ public class ScheduleController {
 		paramMap.put("seq", "" + (seq + 1));
 		paramMap.put("writer", writer);
 		paramMap.put("title", title);
+		paramMap.put("contents", contents);
 		paramMap.put("pay_day", pay_day);
 		paramMap.put("pay_ot", pay_ot);
 		paramMap.put("pay_ottime", pay_ottime);
@@ -322,32 +324,35 @@ public class ScheduleController {
 	@RequestMapping(value = "scheduleUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> scheduleUpdate(Locale locale, Model model, HttpServletRequest req,
-			@RequestParam("seq") String seq, @RequestParam("title") String title,
-			@RequestParam("endtime") String endtime, @RequestParam("contents") String contents,
-			@RequestParam("starttime") String starttime, @RequestParam("realnames") String realnames,
-			@RequestParam("subnames") String subnames, @RequestParam("etcYn") String etcYn) throws Exception {
+											  @RequestParam("seq") String seq,
+											  @RequestParam("title") String title,
+											  @RequestParam("endtime") String endtime,
+											  @RequestParam("pay_day") String pay_day,
+											  @RequestParam("pay_ot") String pay_ot,
+											  @RequestParam("pay_ottime") String pay_ottime,
+											  @RequestParam("contents") String contents,
+											  @RequestParam("pay_latetime") String pay_latetime,
+											  @RequestParam("pay_nighttime") String pay_nighttime,
+											  @RequestParam("starttime") String starttime,
+											  @RequestParam("etcYn") String etcYn) throws Exception {
+
 		logger.info("Welcome scheduleUpdate! The client locale is {}.", locale);
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
-		StringTokenizer realname = new StringTokenizer(realnames, ",");
-		StringTokenizer subname = new StringTokenizer(subnames, ",");
 		paramMap.put("seq", seq);
 		paramMap.put("writer", writer);
 		paramMap.put("title", title);
 		paramMap.put("contents", contents);
+		paramMap.put("pay_day", pay_day);
+		paramMap.put("pay_ot", pay_ot);
+		paramMap.put("pay_ottime", pay_ottime);
+		paramMap.put("pay_latetime", pay_latetime);
+		paramMap.put("pay_nighttime", pay_nighttime);
 		paramMap.put("starttime", starttime);
 		paramMap.put("endtime", endtime);
 		paramMap.put("etcYn", etcYn);
-		while (realname.hasMoreElements()) {
-			Map<String, String> fileMap = new HashMap<String, String>();
-			String rname = realname.nextToken();
-			String sname = subname.nextToken();
-			fileMap.put("scheduleSeq", seq);
-			fileMap.put("realname", rname);
-			fileMap.put("subname", sname);
-			resultMap.put("fileCnt", homeService.scheduleFileWrite(fileMap));
-		}
+
 		resultMap.put("resultCnt", homeService.scheduleUpdate(paramMap));
 		return resultMap;
 	}

@@ -295,7 +295,7 @@ function contentsUpdate(){
 		$('#schedulefileName').html(html + '<span>&nbsp;' +  span.outerHTML + '<i class="icon-trashcan icon-small" style="cursor:pointer;" onclick="scheduleFileDelete(\''+trim(files[i].subname)+'\')"></i></span>');
 	}
 	writeModal.show();
-	editorInit('contents');
+	//editorInit('contents');
 }
 
 /**

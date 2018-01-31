@@ -123,6 +123,10 @@ $(function(){
     $('#pay-monthtime').click(function(){
         fileModal.show();
     });
+    
+    $('#monthtimView').click(function () {
+        alert("시급 수정");
+    })
 
     $('#pay-monthtimeUpdate').click(function(){
 		var url = getContextPath()+'/home/payMonthUpdate.do';
@@ -191,7 +195,7 @@ $(function(){
 	$('#writeBtn').click(function(){
         //oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
 		//var title = $('#title').val();
-		//var contents = $('#contents').val();
+		var contents = $('#contents').val();
 		var starttime = $('#starttime').val();
 		var endtime = $('#endtime').val();
         var pay_day = $('#pay_day').val();
@@ -241,7 +245,7 @@ $(function(){
 			});
 
 			scheduleParam.title=title;
-			//scheduleParam.contents=contents;
+			scheduleParam.contents=contents;
             scheduleParam.pay_day=pay_day;
             scheduleParam.pay_ot=pay_ot;
             scheduleParam.pay_ottime=pay_ottime;
@@ -371,7 +375,13 @@ $(function(){
 							fileHtml += '&nbsp;&nbsp;<a href="javascript:scheduleFileDown('+files[i].seq+')">' + files[i].realname +'</a>&nbsp;&nbsp;';
 						}
 						fileHtml += '</div>';
-						$("#modal-contents").html('<div class="label label-red" style="min-width:300px;">' + stime + ' ~ ' + etime + '</div><br><div class="notify contents-view" style="margin-top:5px;">' + article.contents +'</div>'+fileHtml);
+						$("#modal-contents").html('<div class="label label-red" style="min-width:300px;">' + stime + ' ~ ' + etime + '</div>' +
+                            '<br>'
+                             + '<div class="notify contents-view" style="margin-top:5px;">' +
+                            article.contents +'' +
+                            '</div>'
+                            + fileHtml
+                        );
 						if(article.isWriter == 'true'){
 							scheduleParam = {seq : article.seq,title : article.title, contents : article.contents, starttime : article.starttime, endtime : article.endtime, etcYn : article.etcYn, files:files};
 							var updateBtn = $('<a/>', {
@@ -430,7 +440,7 @@ $(function(){
 			epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
 			$('#etcYn').attr('checked',false);
 			writeModal.show();
-			editorInit('contents');
+			//editorInit('contents');
 	    }
 	});
 

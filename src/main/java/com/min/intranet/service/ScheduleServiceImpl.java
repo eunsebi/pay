@@ -90,16 +90,16 @@ public class ScheduleServiceImpl extends SqlSessionDaoSupport implements Schedul
 	@Override
 	public int scheduleDelete(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
-		String writer = paramMap.get("writer");
-		paramMap.put("writer",encryptor.base64Encoding(writer));
+		//String writer = paramMap.get("writer");
+		//paramMap.put("writer",encryptor.base64Encoding(writer));
 		return getSqlSession().delete("pay.delete", paramMap);
 	}
 
 	@Override
 	public int scheduleUpdate(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
-		String writer = paramMap.get("writer");
-		paramMap.put("writer",encryptor.base64Encoding(writer));
+		//String writer = paramMap.get("writer");
+		//paramMap.put("writer",encryptor.base64Encoding(writer));
 		return getSqlSession().update("pay.update",paramMap);
 	}
 
