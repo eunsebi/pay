@@ -176,8 +176,21 @@ public class ScheduleController {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
 
+		String sYear = "2018";
+		String sMonth = "1";
+
+		if(Integer.parseInt(sMonth) < 9) {
+			sMonth = "0"+ sMonth;
+		}
+
+		System.out.println("----------------------------------------------");
+		System.out.println("email : " + writer);
+
+		paramMap.put("payDate", sYear+sMonth);
 		paramMap.put("user_email", writer);
 		Map<String, ?> resultMap = homeService.payMonthUpdate(paramMap);
+
+		System.out.println("result : " + resultMap);
 
 		return resultMap;
 	}

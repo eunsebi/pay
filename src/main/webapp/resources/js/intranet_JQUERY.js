@@ -124,29 +124,27 @@ $(function(){
         fileModal.show();
     });
     
-    $('#monthtimView').click(function () {
+    /*$('#pay-monthtimView').click(function () {
         alert("시급 수정");
-    })
+        payupdateModal.show();
+    });*/
 
-    $('#pay-monthtimeUpdate').click(function(){
+    $('#pay-monthtimView').click(function(){
+        alert("dddd : " + start.getFullYear());
+
 		var url = getContextPath()+'/home/payMonthUpdate.do';
 		$.ajax({
 			url : url,
 			type : 'post',
 			success : function(response){
-				$('iframe[id!=scheduleFrame]').remove();
-				$('#time_salary').val('');
 				//$('#contents').val('');
 				/*$('#pay_day').val('');
 				$('#pay_ot').val('');
 				$('#pay_ottime').val('');
 				$('#pay_latetime').val('');
 				$('#pay_nighttime').val('');*/
-				$('#schcalendar').fullCalendar('refetchEvents');
-				$('#schedulefileName').html('');
-				var date = new Date();
-				spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
-				epicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());
+				//$('#schcalendar').fullCalendar('refetchEvents');
+				//$('#schedulefileName').html('');
 			}
 		});
     });

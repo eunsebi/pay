@@ -137,7 +137,7 @@
 		LONGEVITY_PENSION,
 		TEXES
 		FROM PAY_DATA
-		WHERE USER_EMAIL = #{user_email}
+		WHERE USER_EMAIL = #{user_email} AND PAY_DATE = #{payDate}
 	</select>
 
 	<!-- 시급 등록월 체크 -->

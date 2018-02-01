@@ -517,14 +517,14 @@
         <div class="head">
             <i class="icon-home"></i>급여 관리 시스템(&nbsp;<span id="head-year"></span>년&nbsp;<span id="head-month"></span>월&nbsp;<span
                 id="head-day"></span>일&nbsp;<span id="head-hour"></span>시&nbsp;<span id="head-min"></span>분&nbsp;)
-            <a class="btn btn-mini btn-gray-black" style="width: 70px;" id="btnLogout"><span>logout</span><i
+            <%--<a class="btn btn-mini btn-gray-black" style="width: 70px;" id="btnLogout"><span>logout</span><i
                     class="icon-upload icon-edge"></i></a>
             <a class="btn btn-gray btn-small" id="sessionBtn"><span id="sessionText">세션유지(꺼짐)</span><i
-                    class="icon-gear"></i></a>
+                    class="icon-gear"></i></a>--%>
             <c:if test="${sessionScope.userInfo != 'guest'}">
-                <a class="btn btn-mini btn-gray-black" style="float:right" id="changePasswd">
+                <%--<a class="btn btn-mini btn-gray-black" style="float:right" id="changePasswd">
                     <span>비밀번호 변경</span>&nbsp;<i class="icon-refresh"></i>
-                </a>
+                </a>--%>
             </c:if>
 
             <c:if test="${sessionScope.isAdmin}">

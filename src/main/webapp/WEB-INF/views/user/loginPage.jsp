@@ -71,7 +71,7 @@ $(function(){
 					</thead>
 					<tbody>
 						<tr>
-							<td align="center"><input type="email" id="email" placeholder="email@email.com" class="input input-large input-black"></td>
+							<td align="center"><input type="email" id="email" placeholder="email@email.com" class="input input-large input-black" autofocus></td>
 							<td align="center"><input type="password" id="passwd" class="input input-large input-black" ></td>
 						</tr>
 						<tr>
