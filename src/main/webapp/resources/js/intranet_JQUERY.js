@@ -517,20 +517,14 @@ $(function(){
 
     // 시급 등록
     $('#payBtn').click(function(){
-        var timeSalary = $('#time_salary').val();
-        /*var job_time = $('#job_time').val();
-        var full_working_pension = $('#full_working_pension').val();
-        var family_pension = $('#family_pension').val();
-        var texes = $('#texes').val();
-        var position_pension = $('#position_pension').val();*/
-        var payDate = $('#pay_date').val();
-
-		/*payParam.time_salary=time_salary;
-		payParam.job_time=job_time;
-		payParam.full_working_pension=full_working_pension;
-		payParam.family_pension=family_pension;
-		payParam.texes=texes;
-		payParam.position_pension=position_pension;*/
+        var timeSalary = removeComma($('#time_salary').val());
+        var job_time = removeComma($('#job_time').val());
+        var full_working_pension = removeComma($('#full_working_pension').val());
+        var family_pension = removeComma($('#family_pension').val());
+        var texes = removeComma($('#texes').val());
+        var position_pension = removeComma($('#position_pension').val());
+        var longevity_pension = removeComma($('#longevity_pension').val());
+        var payDate = removeComma($('#pay_date').val());
 
         if(timeSalary == ''){
             alert('시급을 입력하세요.');
@@ -540,6 +534,22 @@ $(function(){
             alert('시급 등록 월을 입력하세요.');
             $('#pay_date').val('');
             $('#pay_date').focus();
+        } else if (full_working_pension =='') {
+            alert('만근수당을 입력하세요.');
+            $('#full_working_pension').val('');
+            $('#full_working_pension').focus();
+        } else if (family_pension =='') {
+            alert('가족수당을 입력하세요.');
+            $('#family_pension').val('');
+            $('#family_pension').focus();
+        } else if (texes =='') {
+            alert('세금예상액을 입력하세요.');
+            $('#texes').val('');
+            $('#texes').focus();
+        } else if (position_pension =='') {
+            alert('직책수당을 입력하세요.');
+            $('#position_pension').val('');
+            $('#position_pension').focus();
         } else {
 
             var url = getContextPath() + '/home/payMonthWrite.do';
@@ -549,17 +559,17 @@ $(function(){
             }*/
 
             $.ajax({
-                url: url,
-                //url : getContextPath()+"/home/payMonthWrite.do",
+                //url: url,
+                url : getContextPath()+"/home/payMonthWrite.do",
                 //data : payParam,
                 data: {
                     time_salary: timeSalary,
-                    job_time: $('#job_time').val(),
-                    full_working_pension: $('#full_working_pension').val(),
-                    family_pension: $('#family_pension').val(),
-                    texes: $('#texes').val(),
-                    position_pension: $('#position_pension').val(),
-                    longevity_pension: $('#longevity_pension').val(),
+                    job_time: job_time,
+                    full_working_pension: full_working_pension,
+                    family_pension: family_pension,
+                    texes: texes,
+                    position_pension: position_pension,
+                    longevity_pension: longevity_pension,
                     pay_date: payDate
                 },
                 type: 'post',
@@ -583,13 +593,13 @@ $(function(){
 
     // 시급 수정 등록
     $('#payBtn_Update').click(function(){
-        var time_salary_Update = $('#time_salary_Update').val();
+        var time_salary_Update = removeComma($('#time_salary_Update').val());
         /*var job_time = $('#job_time_Update').val();
         var full_working_pension = $('#full_working_pension_Update').val();
         var family_pension = $('#family_pension_Update').val();
         var texes = $('#texes').val();
         var position_pension = $('#position_pension').val();*/
-        var pay_date_Update = $('#pay_date_Update').val();
+        var pay_date_Update = removeComma($('#pay_date_Update').val());
 
         /*payParam.time_salary=time_salary;
         payParam.job_time=job_time;
@@ -620,12 +630,12 @@ $(function(){
                 //data : payParam,
                 data: {
                     time_salary: time_salary_Update,
-                    job_time: $('#job_time_Update').val(),
-                    full_working_pension: $('#full_working_pension_Update').val(),
-                    family_pension: $('#family_pension_Update').val(),
-                    texes: $('#texes_Update').val(),
-                    position_pension: $('#position_pension_Update').val(),
-                    longevity_pension: $('#longevity_pension_Update').val(),
+                    job_time: removeComma($('#job_time_Update').val()),
+                    full_working_pension: removeComma($('#full_working_pension_Update').val()),
+                    family_pension: removeComma($('#family_pension_Update').val()),
+                    texes: removeComma($('#texes_Update').val()),
+                    position_pension: removeComma($('#position_pension_Update').val()),
+                    longevity_pension: removeComma($('#longevity_pension_Update').val()),
                     pay_date: pay_date_Update
                 },
                 type: 'post',

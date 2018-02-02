@@ -67,7 +67,8 @@
                 <tr>
                     <td>시급 :</td>
                     <td>
-                        <input id="time_salary_Update" name="time_salary_Update" type="text" size="10" maxlength="10"/>
+                        <input id="time_salary_Update" name="time_salary_Update" type="text" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>근무시간 :</td>
                     <td>
@@ -77,27 +78,32 @@
                 <tr>
                     <td>만근수당 :</td>
                     <td width="50">
-                        <input id="full_working_pension_Update" name="full_working_pension_Update" type="text" value="50000" size="10" maxlength="10"/>
+                        <input id="full_working_pension_Update" name="full_working_pension_Update" type="text" value="" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>가족수당 :</td>
                     <td>
-                        <input id="family_pension_Update" name="family_pension_Update" type="text" value="20000" size="10" maxlength="10"/>
+                        <input id="family_pension_Update" name="family_pension_Update" type="text" value="" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
                 <tr>
                     <td>근속수당 :</td>
                     <td width="50">
-                        <input id="longevity_pension_Update" name="longevity_pension_Update" type="text" value="50000" size="10" maxlength="10"/>
+                        <input id="longevity_pension_Update" name="longevity_pension_Update" type="text" value="" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>세금예상액 :</td>
                     <td>
-                        <input id="texes_Update" name="texes_Update" type="text" value="400000" size="10" maxlength="10"/>
+                        <input id="texes_Update" name="texes_Update" type="text" value="" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
                 <tr>
                     <td>직책수당 :</td>
                     <td width="50">
-                        <input id="position_pension_Update" name="position_pension_Update" type="text" value="0" size="10" maxlength="10"/>
+                        <input id="position_pension_Update" name="position_pension_Update" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>등록월  :</td>
                     <td>
@@ -453,37 +459,44 @@
                 <tr>
                     <td>시급 :</td>
                     <td>
-                        <input id="time_salary" name="time_salary" value="" type="text" size="10" maxlength="10"/>
+                        <input id="time_salary" name="time_salary" value="" type="text" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>근무시간 :</td>
                     <td>
-                        <input id="job_time" name="job_time" type="text" value="240" size="10" maxlength="10"/>
+                        <input id="job_time" name="job_time" type="text" value="240" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
                 <tr>
                     <td>만근수당 :</td>
                     <td width="50">
-                        <input id="full_working_pension" name="full_working_pension" type="text" value="50000" size="10" maxlength="10"/>
+                        <input id="full_working_pension" name="full_working_pension" type="text" value="50,000" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>가족수당 :</td>
                     <td>
-                        <input id="family_pension" name="family_pension" type="text" value="20000" size="10" maxlength="10"/>
+                        <input id="family_pension" name="family_pension" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
                     <tr>
                     <td>근속수당 :</td>
                     <td width="50">
-                        <input id="longevity_pension" name="longevity_pension" type="text" value="50000" size="10" maxlength="10"/>
+                        <input id="longevity_pension" name="longevity_pension" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>세금예상액 :</td>
                     <td>
-                        <input id="texes" name="texes" type="text" value="400000" size="10" maxlength="10"/>
+                        <input id="texes" name="texes" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
                 <tr>
                     <td>직책수당 :</td>
                     <td width="50">
-                        <input id="position_pension" name="position_pension" type="text" value="0" size="10" maxlength="10"/>
+                        <input id="position_pension" name="position_pension" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                     <td>등록월  :</td>
                     <td>
