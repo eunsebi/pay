@@ -296,6 +296,7 @@ $(function(){
 		}
 	});
 
+	/* 달력 출력 */
     $('#schcalendar').fullCalendar({
 		header: {
 			left: ' ',
@@ -328,8 +329,8 @@ $(function(){
 	            },
 	            success: function(response) {
                     getPayDay();
-                    getPay(end.getFullYear(),end.getMonth());
                     getPayMonthView(end.getFullYear(), end.getMonth());
+                    getPay(end.getFullYear(),end.getMonth());
                     var events = [];
 	                for(var i = 0 ; i < response.length ; i ++){
 	                	var color;

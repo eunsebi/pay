@@ -547,8 +547,8 @@ function getPay(year,month){
         var result = response;
         var html = '';
         if (result.length == 0) {
-            alert(smonth + "월 급여정보가 등록이 안되었거나 근무 기록이 없습니다.");
-            fileModal.show();
+            alert(smonth + "월 근무정보가 등록이 안되었습니다..");
+            //fileModal.show();
         } else {
             html +='<div class="pay-contents">';
             html +='<div class="label label-blue" style="margin:5px;">';
@@ -576,7 +576,7 @@ function getPay(year,month){
     }).fail(function(jqxhr, textStatus, error){
         var err = textStatus + ", " + error;
         console.log( "Request Failed: " + err );
-        location.href=getContextPath()+'/common/error.do?code='+textStatus;
+        //location.href=getContextPath()+'/common/error.do?code='+textStatus;
     });
 }
 
@@ -606,7 +606,8 @@ function getPayMonthView(year, month){
     }).fail(function(jqxhr, textStatus, error){
         var err = textStatus + ", " + error;
         console.log( "Request Failed: " + err );
-        location.href=getContextPath()+'/common/error.do?code='+textStatus;
+        //location.href=getContextPath()+'/common/error.do?code='+textStatus;
+        //location.href=getContextPath()+'/main.do';
     });
 }
 
