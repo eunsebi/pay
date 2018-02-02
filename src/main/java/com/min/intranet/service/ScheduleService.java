@@ -38,7 +38,9 @@ public interface ScheduleService {
 
     List selectListSalaryCalculation(Map<String, String> commandMap);
 
-    Map<String,String> payMonthUpdate(Map<String, String> paramMap);
+    Map<String,String> payMonthSelect(Map<String, String> paramMap);
 
     int payMonthEkkor(Map<String, String> paramMap);
+
+    Integer payMonthUpdate(Map<String, String> paramMap);
 }

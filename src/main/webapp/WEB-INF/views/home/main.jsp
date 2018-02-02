@@ -57,15 +57,62 @@
             </div>
         </div>
     </div>
-    <!-- 게임모달 -->
+    <!-- 게임모달(시급수정) -->
     <div id="gameModal" class="msgbox" style="display: none;">
         <div class="head">
-            <span id="game-title">지렁이게임</span>
+            <span id="pay-updatetitle">시급 수정하기</span>
         </div>
         <div class="body">
-            <div id="gameBody"></div>
-            <div style="text-align: center; margin-bottom: 10px;">
-                <a href="#" class="btn btn-gray btn-small" onclick='javascript:gameModal.hide();'>Close</a>
+            <table border="0">
+                <tr>
+                    <td>시급 :</td>
+                    <td>
+                        <input id="time_salary_Update" name="time_salary_Update" type="text" size="10" maxlength="10"/>
+                    </td>
+                    <td>근무시간 :</td>
+                    <td>
+                        <input id="job_time_Update" name="job_time_Update" type="text" value="240" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>만근수당 :</td>
+                    <td width="50">
+                        <input id="full_working_pension_Update" name="full_working_pension_Update" type="text" value="50000" size="10" maxlength="10"/>
+                    </td>
+                    <td>가족수당 :</td>
+                    <td>
+                        <input id="family_pension_Update" name="family_pension_Update" type="text" value="20000" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>근속수당 :</td>
+                    <td width="50">
+                        <input id="longevity_pension_Update" name="longevity_pension_Update" type="text" value="50000" size="10" maxlength="10"/>
+                    </td>
+                    <td>세금예상액 :</td>
+                    <td>
+                        <input id="texes_Update" name="texes_Update" type="text" value="400000" size="10" maxlength="10"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>직책수당 :</td>
+                    <td width="50">
+                        <input id="position_pension_Update" name="position_pension_Update" type="text" value="0" size="10" maxlength="10"/>
+                    </td>
+                    <td>등록월  :</td>
+                    <td>
+                        <input id="pay_date_Update" name="pay_date_Update" type="text" size="10" maxlength="10" readonly/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td height="20" colspan="2">&nbsp;</td>
+                    <td height="20">ex)201801</td>
+                </tr>
+            </table>
+            <div style="text-align: center;">
+                <a href="#" id="payBtn_Update" class="btn btn-gray btn-small">저장</a>
+                <a href="#" id="payClose_Update" class="btn btn-gray btn-small">Close</a>
             </div>
         </div>
     </div>
@@ -95,7 +142,7 @@
             </div>
         </div>
     </div>
-    <!-- 파일등록모달 -->
+    <!-- 파일등록모달(미사용) -->
     <div id="payModal" class="msgbox" style="display: none;">
         <div class="head">
             <span id="file-title">파일 등록하기</span>
@@ -445,7 +492,8 @@
                 </tr>
 
                 <tr>
-                    <td height="20" colspan="4">&nbsp;</td>
+                    <td height="20" colspan="2">&nbsp;</td>
+                    <td height="20">ex) 201801</td>
                 </tr>
             </table>
             <div style="text-align: center;">
@@ -454,61 +502,15 @@
             </div>
         </div>
     </div>
-    <!-- 시급 수정 모달 -->
+    <!-- 시급 수정 모달(미사용) -->
     <div id="payupdateModal" class="msgbox" style="display: none;">
         <div class="head">
-            <span id="pay-updatetitle">시급 수정하기</span>
+            <span id="game-title">지렁이게임</span>
         </div>
         <div class="body">
-            <table border="0">
-                <tr>
-                    <td>시급 :</td>
-                    <td>
-                        <input id="time_salary_Update" name="time_salary_Update" type="text" size="10" maxlength="10"/>
-                    </td>
-                    <td>근무시간 :</td>
-                    <td>
-                        <input id="job_time_Update" name="job_time_Update" type="text" value="240" size="10" maxlength="10"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>만근수당 :</td>
-                    <td width="50">
-                        <input id="full_working_pension_Update" name="full_working_pension_Update" type="text" value="50000" size="10" maxlength="10"/>
-                    </td>
-                    <td>가족수당 :</td>
-                    <td>
-                        <input id="family_pension_Update" name="family_pension_Update" type="text" value="20000" size="10" maxlength="10"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>근속수당 :</td>
-                    <td width="50">
-                        <input id="longevity_pension_Update" name="longevity_pension_Update" type="text" value="50000" size="10" maxlength="10"/>
-                    </td>
-                    <td>세금예상액 :</td>
-                    <td>
-                        <input id="texes_Update" name="texes_Update" type="text" value="400000" size="10" maxlength="10"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>직책수당 :</td>
-                    <td width="50">
-                        <input id="position_pension_Update" name="position_pension_Update" type="text" value="0" size="10" maxlength="10"/>
-                    </td>
-                    <td>등록월  :</td>
-                    <td>
-                        <input id="pay_date_Update" name="pay_date_Update" type="text" size="10" maxlength="10"/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td height="20" colspan="4">&nbsp;</td>
-                </tr>
-            </table>
-            <div style="text-align: center;">
-                <a href="#" id="payBtn_Update" class="btn btn-gray btn-small">저장</a>
-                <a href="#" id="payClose_Update" class="btn btn-gray btn-small">Close</a>
+            <div id="gameBody"></div>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <a href="#" class="btn btn-gray btn-small" onclick='javascript:gameModal.hide();'>Close</a>
             </div>
         </div>
     </div>
@@ -528,9 +530,9 @@
             </c:if>
 
             <c:if test="${sessionScope.isAdmin}">
-                <a class="btn btn-mini btn-gray-black" style="float:right" id="addEmployee">
+                <%--<a class="btn btn-mini btn-gray-black" style="float:right" id="addEmployee">
                     <span>사용자 추가</span>&nbsp;<i class="icon-gear"></i>
-                </a>
+                </a>--%>
 
                 <!-- 사용자 추가 모달 -->
                 <div id="userModal" class="msgbox" style="display: none;">
@@ -634,8 +636,8 @@
                                 class="icon-refresh"></i></a>
                         <a class="left btn btn-mini btn-gray-black" id="etc-chart"><span>통계</span>&nbsp;<i
                                 class="icon-gear"></i></a>
-                        <a class="left btn btn-mini btn-gray-black" id="etc-game"><span>지렁이 게임</span>&nbsp;<i
-                                class="icon-image"></i></a>
+                        <%--<a class="left btn btn-mini btn-gray-black" id="etc-game"><span>지렁이 게임</span>&nbsp;<i
+                                class="icon-image"></i></a>--%>
                     </div>
                     <span id="etcSelect">
 					<select id="syear">
@@ -749,7 +751,7 @@
             <div id="main_View" style="display: block;">
                 <div class="group">
                     <a class="left btn btn-mini btn-gray-black" id="pay-monthtime"><span>시급등록</span>&nbsp;<i class="icon-add-dir"></i></a>
-                    <a class="left btn btn-mini btn-gray-black" id="pay-monthtimView"><span>시급수정</span>&nbsp;<i class="icon-add-dir"></i></a>
+                    <a class="left btn btn-mini btn-gray-black" id="etc-game"><span>시급수정</span>&nbsp;<i class="icon-add-dir"></i></a>
                     <a class="left btn btn-mini btn-gray-black" id="sview-refresh"><span>새로고침</span>&nbsp;<i class="icon-refresh"></i></a>
                     (날짜의 빈공간을 클릭하면 스케줄을 등록 할 수 있습니다.)
                 </div>

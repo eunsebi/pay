@@ -112,7 +112,7 @@ $(function(){
 	});
 	
 	$('#etc-game').click(function(){
-		$('#gameBody').append('<iframe src="'+getContextPath()+'/resources/html/snake.jsp" height="400"></iframe>');
+		//$('#gameBody').append('<iframe src="'+getContextPath()+'/resources/html/snake.jsp" height="400"></iframe>');
 		gameModal.show();
 	});
 
@@ -130,9 +130,7 @@ $(function(){
     });*/
 
     $('#pay-monthtimView').click(function(){
-        alert("dddd : " + start.getFullYear());
-
-		var url = getContextPath()+'/home/payMonthUpdate.do';
+		var url = getContextPath()+'/home/payMonthSelect.do';
 		$.ajax({
 			url : url,
 			type : 'post',
@@ -211,8 +209,8 @@ $(function(){
         else if (pay_day == "5") title1 = "년차";
         else if (pay_day == "6") title1 = "결근";
 
-        if (pay_ot == "1") title2 = "OT 했다";
-        else title2 = "OT 안했다";
+        if (pay_ot == "1") title2 = "OT";
+        else title2 = "";
 
         if (pay_day == "5") title = title1;
         else title = title1 + " " + title2;
@@ -329,10 +327,10 @@ $(function(){
 		        	emonth:end.getMonth()+1
 	            },
 	            success: function(response) {
-	            	getPayDay();
-	            	//alert("syear : " + (start.getFullYear()) + " month : " + start.getMonth() + " end year : " + end.getFullYear() + " end month " + end.getMonth());
-	            	getPay(end.getFullYear(),end.getMonth());
-	                var events = [];
+                    getPayDay();
+                    getPay(end.getFullYear(),end.getMonth());
+                    getPayMonthView(end.getFullYear(), end.getMonth());
+                    var events = [];
 	                for(var i = 0 ; i < response.length ; i ++){
 	                	var color;
 	                	var textColor;
@@ -375,7 +373,7 @@ $(function(){
 						fileHtml += '</div>';
 						$("#modal-contents").html('<div class="label label-red" style="min-width:300px;">' + stime + ' ~ ' + etime + '</div>' +
                             '<br>'
-                             + '<div class="notify contents-view" style="margin-top:5px;">' +
+                             + '<div style="margin-top:5px; height: 50px">' +
                             article.contents +'' +
                             '</div>'
                             + fileHtml
@@ -505,18 +503,26 @@ $(function(){
 		$('iframe[id!=scheduleFrame]').remove();
 	});
 
+	// 시급 등록 닫기
     $('#payClose').click(function(){
         fileModal.hide();
         $('iframe[id!=scheduleFrame]').remove();
     });
 
+    // 시급 수정 닫기
+    $('#payClose_Update').click(function(){
+        gameModal.hide();
+        $('iframe[id!=scheduleFrame]').remove();
+    });
+
+    // 시급 등록
     $('#payBtn').click(function(){
         var timeSalary = $('#time_salary').val();
-        var job_time = $('#job_time').val();
+        /*var job_time = $('#job_time').val();
         var full_working_pension = $('#full_working_pension').val();
         var family_pension = $('#family_pension').val();
         var texes = $('#texes').val();
-        var position_pension = $('#position_pension').val();
+        var position_pension = $('#position_pension').val();*/
         var payDate = $('#pay_date').val();
 
 		/*payParam.time_salary=time_salary;
@@ -566,6 +572,72 @@ $(function(){
 					} else {
                         //alert(JSON.parse(response).msg);
                         fileModal.hide();
+                    }
+                },
+                error : function(response,txt){
+                    location.href = getContextPath()+"/common/error.do?error="+txt;
+                }
+            });
+        }
+    });
+
+    // 시급 수정 등록
+    $('#payBtn_Update').click(function(){
+        var time_salary_Update = $('#time_salary_Update').val();
+        /*var job_time = $('#job_time_Update').val();
+        var full_working_pension = $('#full_working_pension_Update').val();
+        var family_pension = $('#family_pension_Update').val();
+        var texes = $('#texes').val();
+        var position_pension = $('#position_pension').val();*/
+        var pay_date_Update = $('#pay_date_Update').val();
+
+        /*payParam.time_salary=time_salary;
+        payParam.job_time=job_time;
+        payParam.full_working_pension=full_working_pension;
+        payParam.family_pension=family_pension;
+        payParam.texes=texes;
+        payParam.position_pension=position_pension;*/
+
+        if(time_salary_Update == ''){
+            alert('시급을 입력하세요.');
+            $('#time_salary_Update').val('');
+            $('#time_salary_Update').focus();
+        } else if(pay_date_Update == ''){
+            alert('시급 등록 월을 입력하세요.');
+            $('#pay_date_Update').val('');
+            $('#pay_date_Update').focus();
+        } else {
+
+            var url = getContextPath() + '/home/payMonthUpdate.do';
+
+            /*if(payParam.seq > 0){
+                url = getContextPath()+'/home/payMonthUpdate.do';
+            }*/
+
+            $.ajax({
+                url: url,
+                //url : getContextPath()+"/home/payMonthWrite.do",
+                //data : payParam,
+                data: {
+                    time_salary: time_salary_Update,
+                    job_time: $('#job_time_Update').val(),
+                    full_working_pension: $('#full_working_pension_Update').val(),
+                    family_pension: $('#family_pension_Update').val(),
+                    texes: $('#texes_Update').val(),
+                    position_pension: $('#position_pension_Update').val(),
+                    longevity_pension: $('#longevity_pension_Update').val(),
+                    pay_date: pay_date_Update
+                },
+                type: 'post',
+                success: function (response) {
+                    response = JSON.parse(response);
+                    if(response.error == 'error' || response.error == null || response.error == 'undefined') {
+                        alert("해당일은 이미 등록이 되어있습니다!!!!!.");
+                        gameModal.show();
+                        $('#pay_date_Update').focus();
+                    } else {
+                        //alert(JSON.parse(response).msg);
+                        gameModal.hide();
                     }
                 },
                 error : function(response,txt){

@@ -168,32 +168,85 @@ public class ScheduleController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "payMonthUpdate.do", method = RequestMethod.POST)
+	@RequestMapping(value = "payMonthSelect.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, ?> payMonthUpdate(Locale locale, HttpServletRequest request) throws Exception {
+	public Map<String, ?> payMonthSelect(Locale locale, HttpServletRequest request,
+										 @RequestParam("syear") String syear,
+										 @RequestParam("smonth") String smonth) throws Exception {
 		logger.info("Welcome payMonthWrite! The client locale is {}.", locale);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
 
-		String sYear = "2018";
-		String sMonth = "1";
-
-		if(Integer.parseInt(sMonth) < 9) {
-			sMonth = "0"+ sMonth;
+		if(Integer.parseInt(smonth) < 9) {
+			smonth = "0"+ smonth;
 		}
 
-		System.out.println("----------------------------------------------");
-		System.out.println("email : " + writer);
-
-		paramMap.put("payDate", sYear+sMonth);
+		paramMap.put("payDate", syear+smonth);
 		paramMap.put("user_email", writer);
-		Map<String, ?> resultMap = homeService.payMonthUpdate(paramMap);
+		Map<String, ?> resultMap = homeService.payMonthSelect(paramMap);
 
 		System.out.println("result : " + resultMap);
 
 		return resultMap;
 	}
+
+	/**
+	 * 월별 시급 수정 등록
+	 * @param locale
+	 * @param model
+	 * @param request
+	 * @param time_salary
+	 * @param job_time
+	 * @param full_working_pension
+	 * @param family_pension
+	 * @param texes
+	 * @param position_pension
+	 * @param longevity_pension
+	 * @param pay_date
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "payMonthUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> payMonthUpdate(Locale locale, Model model, HttpServletRequest request,
+											 @RequestParam("time_salary") String time_salary,
+											 @RequestParam("job_time") String job_time,
+											 @RequestParam("full_working_pension") String full_working_pension,
+											 @RequestParam("family_pension") String family_pension,
+											 @RequestParam("texes") String texes,
+											 @RequestParam("position_pension") String position_pension,
+											 @RequestParam("longevity_pension") String longevity_pension,
+											 @RequestParam("pay_date") String pay_date
+	) throws Exception {
+
+		logger.info("Welcome payMonthUpdate! The client locale is {}.", locale);
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+
+		//int seq = homeService.getScheduleMaxSeq();
+		//paramMap.put("seq", "" + (seq + 1));
+		paramMap.put("time_salary", time_salary);
+		paramMap.put("job_time", job_time);
+		paramMap.put("full_working_pension", full_working_pension);
+		paramMap.put("family_pension", family_pension);
+		paramMap.put("texes", texes);
+		paramMap.put("position_pension", position_pension);
+		paramMap.put("longevity_pension", longevity_pension);
+		paramMap.put("user_email", writer);
+		paramMap.put("pay_date", pay_date);
+
+		Integer updateCnt = homeService.payMonthUpdate(paramMap);
+
+		System.out.println("updateCnt : " +updateCnt );
+		resultMap.put("resultCnt", updateCnt);
+		resultMap.put("error", "ok");
+
+		return resultMap;
+	}
+
 
 	/**
 	 * 급여 계산

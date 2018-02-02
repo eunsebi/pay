@@ -535,9 +535,8 @@ function refrashRow(table, param){
 }
 
 /*
- * 메일 참조 리스트
+* 급여 계산
  */
-
 function getPay(year,month){
     var syear = year;
     var smonth = month;
@@ -581,6 +580,39 @@ function getPay(year,month){
     });
 }
 
+/*
+ * 급여정보 수정 페이지
+ */
+function getPayMonthView(year, month){
+    var syear = year;
+    var smonth = month;
+    $.getJSON(getContextPath()+'/home/payMonthSelect.do',{syear:syear,smonth:month},function(response){
+        var result = response;
+        var html = '';
+        if (result.length == 0) {
+            alert(smonth + "월 급여정보가 등록이 안되었거나 근무 기록이 없습니다.");
+            fileModal.show();
+        } else {
+            $('#time_salary_Update').val(result.TIME_SALARY);
+            $('#job_time_Update').val(result.JOB_TIME);
+            $('#full_working_pension_Update').val(result.FULL_WORKING_PENSION);
+            $('#family_pension_Update').val(result.FAMILY_PENSION);
+            $('#longevity_pension_Update').val(result.LONGEVITY_PENSION);
+            $('#texes_Update').val(result.TEXES);
+            $('#position_pension_Update').val(result.POSITION_PENSION);
+            $('#pay_date_Update').val(result.PAY_DATE);
+        }
+        //$('#pay-contents').html(html);
+    }).fail(function(jqxhr, textStatus, error){
+        var err = textStatus + ", " + error;
+        console.log( "Request Failed: " + err );
+        location.href=getContextPath()+'/common/error.do?code='+textStatus;
+    });
+}
+
+/*
+ * 메일 참조 리스트
+ */
 function addCC(obj){
 	var isCC = false;
 	var name = obj.name;

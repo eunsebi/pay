@@ -263,9 +263,11 @@ html .fc,
 	z-index: 9;
 	}
 	 
+/* 이벤트 제목 글씨 */
 .fc-event {
 	border: 1px solid #3a87ad; /* default BORDER color */
-	background-color: #3a87ad; /* default BACKGROUND color */
+	background-color: #d4bff1;
+	/*background-color: #3a87ad;*/ /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
 	font-size: .85em;
 	cursor: default;

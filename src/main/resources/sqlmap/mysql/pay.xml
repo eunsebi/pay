@@ -124,11 +124,12 @@
 		)
 	</insert>
 
-	<!--시급정보 등록-->
-	<select id="payMonthUpdate" resultType="map">
+	<!-- 월별 시급정보 조회-->
+	<select id="payMonthSelect" resultType="map">
 		SELECT
 		USER_EMAIL,
 		PAY_DATE,
+		JOB_TIME,
 		TIME_SALARY,
 		JOB_TIME,
 		FULL_WORKING_PENSION,
@@ -139,6 +140,20 @@
 		FROM PAY_DATA
 		WHERE USER_EMAIL = #{user_email} AND PAY_DATE = #{payDate}
 	</select>
+
+	<update id="payMonthUpdate" >
+		UPDATE PAY_DATA
+		SET TIME_SALARY = #{time_salary},
+			JOB_TIME = #{job_time},
+			FULL_WORKING_PENSION = #{full_working_pension},
+			FAMILY_PENSION = #{family_pension},
+			TEXES = #{texes},
+			POSITION_PENSION = #{position_pension},
+			LONGEVITY_PENSION = #{longevity_pension},
+			UPTIME = NOW()
+		WHERE PAY_DATE = #{pay_date}
+			  AND USER_EMAIL = #{user_email}
+	</update>
 
 	<!-- 시급 등록월 체크 -->
 	<select id="payMonthEkkor" resultType="int">
