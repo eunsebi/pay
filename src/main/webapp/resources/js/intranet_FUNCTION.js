@@ -568,6 +568,10 @@ function getPay(year,month){
             html +='<br>';
             html += '야간수당 : ' + result[0].calNightPersion;
             html +='<br>';
+            html += '년차수당 : ' + result[0].calYearly;
+            html +='<br>';
+            html += '기타수당 : ' + result[0].calEtc;
+            html +='<br>';
             html += '총급여액 : ' + result[0].persionSum;
             html +='<br>';
             html +='</div>';
@@ -598,7 +602,9 @@ function getPayMonthView(year, month){
             $('#full_working_pension_Update').val(commaSplit(result.FULL_WORKING_PENSION));
             $('#family_pension_Update').val(commaSplit(result.FAMILY_PENSION));
             $('#longevity_pension_Update').val(commaSplit(result.LONGEVITY_PENSION));
-            $('#texes_Update').val(commaSplit(result.TEXES));
+            $('#yearly_Update').val(commaSplit(result.YEARLY));
+            $('#etc_Update').val(commaSplit(result.ETC_UPDATE));
+            $('#texes_Update').val(commaSplit(result.ETC));
             $('#position_pension_Update').val(commaSplit(result.POSITION_PENSION));
             $('#pay_date_Update').val(result.PAY_DATE);
         }

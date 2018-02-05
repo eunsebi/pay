@@ -31,6 +31,10 @@ public class PayUserDataVO {
 
     private String texes;
 
+    private String yearly;
+
+    private String etc;
+
     private String regTime;
 
     private String upTime;

@@ -120,6 +120,8 @@ public class ScheduleController {
 											 @RequestParam("texes") String texes,
 											 @RequestParam("position_pension") String position_pension,
                                              @RequestParam("longevity_pension") String longevity_pension,
+											 @RequestParam("yearly") String yearly,
+											 @RequestParam("etc") String etc,
 											 @RequestParam("pay_date") String pay_date
 											 ) throws Exception {
 
@@ -138,6 +140,8 @@ public class ScheduleController {
 		paramMap.put("texes", texes);
 		paramMap.put("position_pension", position_pension);
         paramMap.put("longevity_pension", longevity_pension);
+		paramMap.put("yearly", yearly);
+		paramMap.put("etc", etc);
 		paramMap.put("user_email", writer);
 		paramMap.put("pay_date", pay_date);
 
@@ -226,6 +230,8 @@ public class ScheduleController {
 			selectMap.put("texes", selectResult.get("TEXES"));
 			selectMap.put("position_pension", selectResult.get("POSITION_PENSION"));
 			selectMap.put("longevity_pension", selectResult.get("LONGEVITY_PENSION"));
+			selectMap.put("yearly", selectResult.get("YEARLY"));
+			selectMap.put("etc", selectResult.get("ETC"));
 			selectMap.put("user_email", writer);
 
 			if (selectResult != null) {
@@ -303,6 +309,8 @@ public class ScheduleController {
 											 @RequestParam("texes") String texes,
 											 @RequestParam("position_pension") String position_pension,
 											 @RequestParam("longevity_pension") String longevity_pension,
+											  @RequestParam("yearly") String yearly,
+											  @RequestParam("etc") String etc,
 											 @RequestParam("pay_date") String pay_date
 	) throws Exception {
 
@@ -321,6 +329,8 @@ public class ScheduleController {
 		paramMap.put("texes", texes);
 		paramMap.put("position_pension", position_pension);
 		paramMap.put("longevity_pension", longevity_pension);
+		paramMap.put("yearly", yearly);
+		paramMap.put("etc", etc);
 		paramMap.put("user_email", writer);
 		paramMap.put("pay_date", pay_date);
 
@@ -640,7 +650,7 @@ public class ScheduleController {
         String str_nightTime = "sumNightTime";						// 야간 잔업시간
         String str_holidayDay = "sumHolidayDay";					// 특근 근무일
         String str_holidayProTime = "sumHolidayProTime";			// 특근 잔업시간
-        String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
+		String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
 		String str_paylatetime = "sumPayLatetime";					// 지각/조퇴 시간
 
         // DB -> String 받아오는 함수
@@ -650,8 +660,8 @@ public class ScheduleController {
         String str_holidayDay_Sum;
         String str_holidayProTime_Sum;
         String str_holidayNightDay_Sum;
-        String str_holidayNightProTime_Sum;
-		String str_paylatetime_sum;
+		String str_holidayNightProTime_Sum;
+		String str_payLateTime_sum;
 
         // String -> Float 변환용(근무시간 합계
         Float num_proTime_Sum = null;
@@ -660,8 +670,8 @@ public class ScheduleController {
         Float num_holidayDay_Sum = null;
         Float num_holidayProTime_Sum = null;
         Float num_holidayNightDay_Sum = null;
-        Float num_holidayNightProTime_Sum = null;
-		Float num_paylatetime_sum = null;
+		Float num_holidayNightProTime_Sum = null;
+		Float num_payLateTime_sum = null;
 
         DecimalFormat df = new DecimalFormat("#,###");
         DecimalFormat dff = new DecimalFormat("#,###.#");
@@ -711,6 +721,8 @@ public class ScheduleController {
 				//Map<String, ?> map = (Map<String, ?>) resultList.get(i);
 				String calculationList = resultList.get(i).toString();
 
+				System.out.println("list : " + calculationList);
+
 				int int_holidayNightProTimeLength = calculationList.indexOf(str_holidayNightProTime);
 				int int_proTimeLength = calculationList.indexOf(str_proTime);
 				int int_nightProDayLength = calculationList.indexOf(str_nightProDay);
@@ -718,7 +730,7 @@ public class ScheduleController {
 				int int_holidayDayLength = calculationList.indexOf(str_holidayDay);
 				int int_holidayProTimeLength = calculationList.indexOf(str_holidayProTime);
 				int int_holidayNightDayLength = calculationList.indexOf(str_holidayNightDay);
-				//int int_paylatetimeLength = calculationList.indexOf(str_paylatetime);
+				int int_payLateTimeLength = calculationList.indexOf(str_paylatetime);
 
 				//특근 잔업시간
 				str_holidayNightProTime_Sum = calculationList.substring(
@@ -726,39 +738,47 @@ public class ScheduleController {
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_proTime) - 1);
 				num_holidayNightProTime_Sum = Float.parseFloat(str_holidayNightProTime_Sum);
 
-				//잔업 시간
+				//주간 잔업 시간
 				str_proTime_Sum = calculationList.substring(
 						int_proTimeLength + str_proTime.length() + 1,
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_nightProDay) - 1);
 				num_proTime_Sum = Float.parseFloat(str_proTime_Sum);
 
+				// 야간 근무일
 				str_nightProDay_Sum = calculationList.substring(
 						int_nightProDayLength + str_nightProDay.length() + 1,
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_nightTime) - 1);
 				num_nightProDay_Sum = Float.parseFloat(str_nightProDay_Sum);
 
-				//야간 시간
+				//야간 잔업 시간
 				str_nightTime_Sum = calculationList.substring(
 						int_nightTimeLength + str_nightTime.length() + 1,
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayDay) - 1);
 				num_nightTime_Sum = Float.parseFloat(str_nightTime_Sum);
 
-				//야간 특근 근무일
+				//주간 특근 근무일
 				str_holidayDay_Sum = calculationList.substring(
 						int_holidayDayLength + str_holidayDay.length() + 1,
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayProTime) - 1);
 				num_holidayDay_Sum = Float.parseFloat(str_holidayDay_Sum);
 
-				// 특근 잔업시간
+				// 주간 특근 잔업시간
 				str_holidayProTime_Sum = calculationList.substring(
 						int_holidayProTimeLength + str_holidayProTime.length() + 1,
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_holidayNightDay) - 1);
 				num_holidayProTime_Sum = Float.parseFloat(str_holidayProTime_Sum);
 
+				// 야간 특근 근무일
 				str_holidayNightDay_Sum = calculationList.substring(
 						int_holidayNightDayLength + str_holidayNightDay.length() + 1,
-						calculationList.length() - 1);
+						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_paylatetime) - 1);
 				num_holidayNightDay_Sum = Float.parseFloat(str_holidayNightDay_Sum);
+
+				// 지각/조퇴 시간
+				str_payLateTime_sum = calculationList.substring(
+						int_payLateTimeLength + str_paylatetime .length() + 1,
+						calculationList.length() - 1);
+				num_payLateTime_sum = Float.parseFloat(str_payLateTime_sum);
 
 			}
 
@@ -769,6 +789,7 @@ public class ScheduleController {
 			//String str_holidayProTime = "sumHolidayProTime";			// 특근 잔업시간
 			//String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
 			//String str_holidayHightProTime = "sumHolidayHightProTime";	// 야간 특근 잔업시간
+			//String str_payLateTime_sum = "str_payLateTime_sum";			// 지각/조퇴시간
 
 			// 잔업수당 시급
 			float jansu = Float.parseFloat(result.getTimeSalary())      // 시급
@@ -780,8 +801,10 @@ public class ScheduleController {
 		float jansu = Float.parseFloat(aa);
 		System.out.println("잔업 시급 : " +jansu);*/
 			System.out.println("잔업 시급 : " + jansu);
+			System.out.println("지각 / 조퇴 시간 : " + num_payLateTime_sum);
 
-			float calBasicTime = Float.parseFloat(result.getJobTime()) * Float.parseFloat(result.getTimeSalary());        //기본급
+			float calBasicTime = (Float.parseFloat(result.getJobTime()) * Float.parseFloat(result.getTimeSalary()))
+					- (num_payLateTime_sum * Float.parseFloat(result.getTimeSalary()));        //기본급
 			float calHolidayDay = num_holidayDay_Sum + num_holidayNightDay_Sum;                                            //특근 근무일
 			float calHolidayPro = num_holidayProTime_Sum + num_holidayNightProTime_Sum;                                    // 특근 잔업시간
 
@@ -800,10 +823,12 @@ public class ScheduleController {
 
 			float calHolidayPersion = calHolidayDay * 8 * jansu * Float.parseFloat("1.5");    // 특근수당
 			float calNightPersion = num_nightTime_Sum * (jansu * Float.parseFloat("0.5"));    // 야간수당
+			float calPaylateTime =  num_payLateTime_sum * Float.parseFloat(result.getTimeSalary());		// 지각/조퇴 차감액
 
 			float persionSum = calBasicTime + calProTime + calHolidayPersion + calNightPersion
 					+ Float.parseFloat(result.getFamilyPension()) + Float.parseFloat(result.getFullWorkingPension())
-					+ Float.parseFloat(result.getPositionPension()) + Float.parseFloat(result.getLongevityPension());                            // 급여 합계
+					+ Float.parseFloat(result.getPositionPension()) + Float.parseFloat(result.getLongevityPension())
+					+ Float.parseFloat(result.getYearly()) + Float.parseFloat(result.getEtc());                            // 급여 합계
 
 			System.out.println("총급여 : " + persionSum);
 			System.out.println("세금 : " + result.getTexes());
@@ -821,12 +846,14 @@ public class ScheduleController {
 			hm.put("calProTime", dff.format(calProTime));                        // 연장수당
 			hm.put("calNightProDay", df.format(num_nightProDay_Sum));            // 야간 근무일
 			hm.put("calHolidayDay", df.format(calHolidayDay));                    // 특근 근무일(야간 특근 포함)
-			hm.put("calHolidayPro", dff.format(calHolidayPro));                    // 특근 잔업시간(야특 포함)
-			hm.put("calNightProTime", dff.format(num_nightTime_Sum));            // 야간 잔업시간
-			hm.put("calHolidayPersion", df.format(calHolidayPersion));            // 특근수당
-			hm.put("calNightPersion", df.format(calNightPersion));                // 야간수당
+			hm.put("calHolidayPro", dff.format(calHolidayPro));                 // 특근 잔업시간(야특 포함)
+			hm.put("calNightProTime", dff.format(num_nightTime_Sum));           // 야간 잔업시간
+			hm.put("calHolidayPersion", df.format(calHolidayPersion));          // 특근수당
+			hm.put("calNightPersion", df.format(calNightPersion));              // 야간수당
+			hm.put("calYearly", result.getYearly());                			// 연차수당
+			hm.put("calEtc", result.getEtc());                					// 연차수당
 			hm.put("persionSum", df.format(persionSum));                        // 총급여액
-			hm.put("total", df.format(calTotal));                                        // 실지급액
+			hm.put("total", df.format(calTotal));                               // 실지급액
 
 			returnList.add(hm);
 		} else {

@@ -104,6 +104,8 @@
 			FAMILY_PENSION,
 			POSITION_PENSION,
 			LONGEVITY_PENSION,
+			YEARLY,
+			ETC,
 			TEXES,
 			REGTIME,
 			UPTIME
@@ -118,6 +120,8 @@
 		#{family_pension},
 		#{position_pension},
 		#{longevity_pension},
+		#{yearly},
+		#{etc},
 		#{texes},
 		NOW(),
 		NOW()
@@ -136,11 +140,14 @@
 		FAMILY_PENSION,
 		POSITION_PENSION,
 		LONGEVITY_PENSION,
+		YEARLY,
+		ETC,
 		TEXES
 		FROM PAY_DATA
 		WHERE USER_EMAIL = #{user_email} AND PAY_DATE = #{payDate}
 	</select>
 
+	<!-- 시급 정보 수정 -->
 	<update id="payMonthUpdate" >
 		UPDATE PAY_DATA
 		SET TIME_SALARY = #{time_salary},
@@ -150,6 +157,8 @@
 			TEXES = #{texes},
 			POSITION_PENSION = #{position_pension},
 			LONGEVITY_PENSION = #{longevity_pension},
+			YEARLY = #{yearly},
+			ETC = #{etc},
 			UPTIME = NOW()
 		WHERE PAY_DATE = #{pay_date}
 			  AND USER_EMAIL = #{user_email}
@@ -244,6 +253,8 @@
 			FORMAT(FAMILY_PENSION,0) AS familyPension,
 			FORMAT(POSITION_PENSION,0) AS positionPension,
 			FORMAT(LONGEVITY_PENSION,0) AS longevityPension,
+			FORMAT(YEARLY,0) AS yearly,
+			FORMAT(ETC,0) AS etc,
 			FORMAT(TEXES,0) AS texes
 			FROM
 			PAY_DATA
@@ -262,6 +273,8 @@
 			FAMILY_PENSION AS familyPension,
 			POSITION_PENSION AS positionPension,
 			LONGEVITY_PENSION AS longevityPension,
+			YEARLY AS yearly,
+			ETC AS etc,
 			TEXES AS texes
 			FROM
 			PAY_DATA
@@ -286,7 +299,9 @@
 		/* 특근 잔업시간 */
 		(SELECT IFNULL (SUM(pay_ottime), 0) FROM PAY WHERE pay_day = '3' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_PRO_TIME,
 		/* 야간 특근 근무일 */
-		(SELECT COUNT(*) FROM PAY WHERE pay_day = '4' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_NIGHT_DAY
+		(SELECT COUNT(*) FROM PAY WHERE pay_day = '4' AND WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_HOLIDAY_NIGHT_DAY,
+		/* 지각/조퇴 시간 */
+		(SELECT IFNULL (SUM(pay_latetime), 0) FROM PAY WHERE WRITER = #{writer} AND (#{searchMonth} BETWEEN SUBSTRING(STARTTIME, 1, 7)  AND SUBSTRING(ENDTIME, 1, 7) )) AS SUM_PAY_LATETIME
 
 		FROM PAY
 		WHERE 1=1

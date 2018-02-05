@@ -188,6 +188,7 @@ $(function(){
 		getFiles();
 	});
 
+	// 근무 등록
 	$('#writeBtn').click(function(){
         //oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
 		//var title = $('#title').val();
@@ -524,6 +525,8 @@ $(function(){
         var family_pension = removeComma($('#family_pension').val());
         var texes = removeComma($('#texes').val());
         var position_pension = removeComma($('#position_pension').val());
+        var yearly = removeComma($('#yearly').val());
+        var etc = removeComma($('#etc').val());
         var longevity_pension = removeComma($('#longevity_pension').val());
         var payDate = removeComma($('#pay_date').val());
 
@@ -571,6 +574,8 @@ $(function(){
                     texes: texes,
                     position_pension: position_pension,
                     longevity_pension: longevity_pension,
+                    yearly: yearly,
+                    etc: etc,
                     pay_date: payDate
                 },
                 type: 'post',
@@ -637,6 +642,8 @@ $(function(){
                     texes: removeComma($('#texes_Update').val()),
                     position_pension: removeComma($('#position_pension_Update').val()),
                     longevity_pension: removeComma($('#longevity_pension_Update').val()),
+                    yearly: removeComma($('#yearly_Update').val()),
+                    etc: removeComma($('#etc_Update').val()),
                     pay_date: pay_date_Update
                 },
                 type: 'post',

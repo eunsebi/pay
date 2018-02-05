@@ -100,6 +100,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>연차수당 :</td>
+                    <td width="50">
+                        <input id="yearly_Update" name="yearly_Update" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
+                    </td>
+                    <td>기타(격려/상여금) :</td>
+                    <td>
+                        <input id="etc_Update" name="etc_Update" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
+                    </td>
+                </tr>
+                <tr>
                     <td>직책수당 :</td>
                     <td width="50">
                         <input id="position_pension_Update" name="position_pension_Update" type="text" value="0" size="10" maxlength="10"
@@ -480,7 +492,7 @@
                                onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
-                    <tr>
+                <tr>
                     <td>근속수당 :</td>
                     <td width="50">
                         <input id="longevity_pension" name="longevity_pension" type="text" value="0" size="10" maxlength="10"
@@ -489,6 +501,18 @@
                     <td>세금예상액 :</td>
                     <td>
                         <input id="texes" name="texes" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>연차수당 :</td>
+                    <td width="50">
+                        <input id="yearly" name="yearly" type="text" value="0" size="10" maxlength="10"
+                               onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
+                    </td>
+                    <td>기타(격려/상여금) :</td>
+                    <td>
+                        <input id="etc" name="etc" type="text" value="0" size="10" maxlength="10"
                                onkeyup="cmaComma(this);" onchange="cmaComma(this);" />
                     </td>
                 </tr>
