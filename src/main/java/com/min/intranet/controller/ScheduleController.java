@@ -732,7 +732,7 @@ public class ScheduleController {
 				int int_holidayNightDayLength = calculationList.indexOf(str_holidayNightDay);
 				int int_payLateTimeLength = calculationList.indexOf(str_paylatetime);
 
-				//특근 잔업시간
+				//야간 특근 잔업시간
 				str_holidayNightProTime_Sum = calculationList.substring(
 						int_holidayNightProTimeLength + str_holidayNightProTime.length() + 1,
 						calculationList.substring(int_holidayNightProTimeLength).indexOf(str_proTime) - 1);
@@ -781,15 +781,6 @@ public class ScheduleController {
 				num_payLateTime_sum = Float.parseFloat(str_payLateTime_sum);
 
 			}
-
-			//String str_proTime = "sumProTime";							// 주간 잔업시간
-			//String str_nightProDay ="sumNightProDay";					// 야간 근무일
-			//String str_nightTime = "sumNightTime";						// 야간 잔업시간
-			//String str_holidayDay = "sumHolidayDay";					// 특근 근무일
-			//String str_holidayProTime = "sumHolidayProTime";			// 특근 잔업시간
-			//String str_holidayNightDay = "sumHolidayNightDay";			// 야간 특근 근무일
-			//String str_holidayHightProTime = "sumHolidayHightProTime";	// 야간 특근 잔업시간
-			//String str_payLateTime_sum = "str_payLateTime_sum";			// 지각/조퇴시간
 
 			// 잔업수당 시급
 			float jansu = Float.parseFloat(result.getTimeSalary())      // 시급
@@ -850,8 +841,22 @@ public class ScheduleController {
 			hm.put("calNightProTime", dff.format(num_nightTime_Sum));           // 야간 잔업시간
 			hm.put("calHolidayPersion", df.format(calHolidayPersion));          // 특근수당
 			hm.put("calNightPersion", df.format(calNightPersion));              // 야간수당
+			hm.put("family", result.getFamilyPension());						// 가족수당
+			hm.put("fullWorking", result.getFullWorkingPension());				// 만근수당
+			hm.put("longevity", result.getLongevityPension());					// 근속수당
+			hm.put("positionPension", result.getPositionPension());				// 직책수당
+
 			hm.put("calYearly", result.getYearly());                			// 연차수당
-			hm.put("calEtc", result.getEtc());                					// 연차수당
+			hm.put("calEtc", result.getEtc());                					// 기타(격려금/성과금)수당
+
+			// 특근일
+			hm.put("sumOverDay", df.format(num_holidayDay_Sum + num_holidayNightDay_Sum));
+			// 특근 잔업시간
+			hm.put("sumOverTime", df.format(num_holidayProTime_Sum + num_holidayNightProTime_Sum));
+			// 주/야 잔업시간
+			hm.put("sumOtTime", df.format(num_holidayProTime_Sum + num_holidayNightProTime_Sum));
+
+			hm.put("calTexes", result.getTexes());									// 공제총액
 			hm.put("persionSum", df.format(persionSum));                        // 총급여액
 			hm.put("total", df.format(calTotal));                               // 실지급액
 

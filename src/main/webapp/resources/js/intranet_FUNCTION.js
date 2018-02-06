@@ -560,17 +560,51 @@ function getPay(year,month){
             html +='</div>';
             html +='<br>';
             html +='<div class="label-pay" style="margin:5px;">';
-            html += '기본급 : ' + result[0].calBasicTime;
+            html += '&nbsp;기 본 급 : ' + result[0].calBasicTime;
             html +='<br>';
-            html += '연장수당 : ' + result[0].calProTime;
+            if (result[0].calProTime != 0) {
+                html += '연장수당 : ' + result[0].calProTime;
+                html += '<br>';
+            }
+            if (result[0].calNightPersion != 0) {
+                html += '야간수당 : ' + result[0].calNightPersion;
+                html += '<br>';
+            }
+            if (result[0].calHolidayPersion != 0) {
+                html += '특근수당 : ' + result[0].calHolidayPersion;
+                html += '<br>';
+            }
+            if (result[0].family != 0 || result[0].fullWorking != 0 || result[0].longevity != 0 || result[0].positionPension != 0) {
+                html += '<br>';
+                html += '&nbsp&nbsp&nbsp&nbsp'+' == 각종 수당 == ';
+                html += '<br>';
+            }
+            if (result[0].family != 0) {
+                html += '가족수당 : ' +  commaSplit(result[0].family);
+                html +='<br>';
+            }
+            if (result[0].longevity != 0) {
+                html += '근속수당 : ' +  commaSplit(result[0].longevity);
+                html +='<br>';
+            }
+            if (result[0].positionPension != 0) {
+                html += '직책수당 : ' +  commaSplit(result[0].positionPension);
+                html +='<br>';
+            }
+            if (result[0].fullWorking != 0) {
+                html += '만근수당 : ' +  commaSplit(result[0].fullWorking);
+                html +='<br>';
+            }
+            if (result[0].calYearly != 0) {
+                html += '연차수당 : ' +  commaSplit(result[0].calYearly);
+                html +='<br>';
+            }
+            if (result[0].calEtc != 0) {
+                html += '기타수당 : ' + commaSplit(result[0].calEtc);
+                html += '<br>';
+            }
             html +='<br>';
-            html += '특근수당 : ' + result[0].calHolidayPersion;
-            html +='<br>';
-            html += '야간수당 : ' + result[0].calNightPersion;
-            html +='<br>';
-            html += '년차수당 : ' + result[0].calYearly;
-            html +='<br>';
-            html += '기타수당 : ' + result[0].calEtc;
+            html += '공제총액 : ' + commaSplit(result[0].calTexes);
             html +='<br>';
             html += '총급여액 : ' + result[0].persionSum;
             html +='<br>';
