@@ -651,6 +651,30 @@ function getPayMonthView(year, month){
     });
 }
 
+/*
+ * OT 시간 자동입력
+ */
+function otTimeChange(obj) {
+    var ot = obj.value;
+
+    if (ot == 1) $('#pay_ottime').val("2.5");
+    else $('#pay_ottime').val("0");
+}
+
+/*
+ * 근무일 변경
+ */
+function dayChange(obj) {
+    var day = obj.value;
+
+    if (day == 5 || day == 6) {
+        $('#pay_ot').val("2");
+        $('#pay_ottime').val("0");
+    } else {
+        $('#pay_ot').val("1");
+        $('#pay_ottime').val("2.5");
+    }
+}
 
 /*
  * Input창 자동 콤마
