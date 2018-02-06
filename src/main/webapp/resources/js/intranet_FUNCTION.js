@@ -637,8 +637,8 @@ function getPayMonthView(year, month){
             $('#family_pension_Update').val(commaSplit(result.FAMILY_PENSION));
             $('#longevity_pension_Update').val(commaSplit(result.LONGEVITY_PENSION));
             $('#yearly_Update').val(commaSplit(result.YEARLY));
-            $('#etc_Update').val(commaSplit(result.ETC_UPDATE));
-            $('#texes_Update').val(commaSplit(result.ETC));
+            $('#etc_Update').val(commaSplit(result.ETC));
+            $('#texes_Update').val(commaSplit(result.TEXES));
             $('#position_pension_Update').val(commaSplit(result.POSITION_PENSION));
             $('#pay_date_Update').val(result.PAY_DATE);
         }

@@ -198,6 +198,7 @@ public class ScheduleController {
 		paramMap.put("payDate", syear+smonth);
 		paramMap.put("user_email", writer);
 
+		System.out.println("email : " + writer);
 		System.out.println("불러오기 payDate : " + paramMap.get("payDate"));
 
 		Map<String, ?> resultMap;
@@ -209,6 +210,15 @@ public class ScheduleController {
 
 			Integer aa = Integer.parseInt(smonth) - 1;
 			smonth = Integer.toString(aa);
+
+			if (Integer.parseInt(smonth) < 0 ) {
+				System.out.println("작년 12월이다");
+				Integer ccc = Integer.parseInt(syear) - 1;
+				syear = Integer.toString(ccc);
+				smonth = "12";
+				selectMap.put("pay_date", syear+smonth);
+				System.out.println("12 월 넘었다 payDate : " + selectMap.get("pay_date"));
+			}
 
 			if(Integer.parseInt(smonth) < 9) {
 				smonth = "0"+ smonth;
@@ -250,7 +260,7 @@ public class ScheduleController {
 					System.out.println("12월이다");
 					Integer ccc = Integer.parseInt(syear) + 1;
 					syear = Integer.toString(ccc);
-					smonth = "01";
+					smonth = "02";
 					selectMap.put("pay_date", syear+smonth);
 					System.out.println("12 월 넘었다 payDate : " + selectMap.get("pay_date"));
 				}
