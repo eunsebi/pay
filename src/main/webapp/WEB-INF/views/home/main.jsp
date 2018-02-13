@@ -566,6 +566,7 @@
                 </a>--%>
             </c:if>
 
+            id : <%=request.getAttribute("payId") %>
             <c:if test="${sessionScope.isAdmin}">
                 <%--<a class="btn btn-mini btn-gray-black" style="float:right" id="addEmployee">
                     <span>사용자 추가</span>&nbsp;<i class="icon-gear"></i>
