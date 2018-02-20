@@ -42,7 +42,8 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
-	public String main(Locale locale, Model model, HttpServletRequest req) {
+	public String main(Locale locale, Model model, HttpServletRequest req,
+					   @RequestParam("email") String writer) {
 		/*
 		 * logger.info("Welcome main! The client locale is {}.", locale); String
 		 * userSys = req.getHeader("user-agent"); boolean isM = false; String []
@@ -52,7 +53,20 @@ public class HomeController {
 		 * "/mobile/main"; }else{ }
 		 */
 		logger.info("Welcome main! The client locale is {}.", locale);
-		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+
+		Map<String, Object> userMap = new HashMap<String, Object>();
+		HttpSession session = req.getSession();
+		if (writer != null) {
+			session.setAttribute(CommonUtil.SESSION_USER, writer);
+			if (writer.equals(adminEmail)) {
+				userMap.put("isAdmin", true);
+			}
+			userMap.put("isLogin", true);
+		} else {
+			writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		}
+
+		System.out.println("session : " + session.getAttribute(CommonUtil.SESSION_USER));
 
 		System.out.println("session Writer : " + writer);
 

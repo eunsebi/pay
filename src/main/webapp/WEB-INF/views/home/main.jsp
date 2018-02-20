@@ -295,7 +295,7 @@
                     <td>근무 구분 :</td>
                     <td>
                         <%--<select id="pay_day" name="salarySe" onchange="Salary_Chck()">--%>
-                        <select id="pay_day" name="pay_day">
+                        <select id="pay_day" name="pay_day" onchange="dayChange(this)">
                             <option value="1">주간</option>
                             <option value="2">야간</option>
                             <option value="3">특근</option>
@@ -310,7 +310,7 @@
                     <td>
                         <%--<select id="salaryPro" name="salaryPro" onchange="javascript:myListener(this);">--%>
                         <%--<select id="pay_ot" name="salaryPro" onchange="javascript:salaryPro_chk(this)">--%>
-                        <select id="pay_ot" name="pay_ot">
+                        <select id="pay_ot" name="pay_ot" onchange="otTimeChange(this)">
                             <option value="1">OT</option>
                             <option value="2">OT 無</option>
                         </select>
@@ -556,9 +556,9 @@
         <div class="head">
             <i class="icon-home"></i>급여 관리 시스템(&nbsp;<span id="head-year"></span>년&nbsp;<span id="head-month"></span>월&nbsp;<span
                 id="head-day"></span>일&nbsp;<span id="head-hour"></span>시&nbsp;<span id="head-min"></span>분&nbsp;)
-            <%--<a class="btn btn-mini btn-gray-black" style="width: 70px;" id="btnLogout"><span>logout</span><i
+            <a class="btn btn-mini btn-gray-black" style="width: 70px;" id="btnLogout"><span>logout</span><i
                     class="icon-upload icon-edge"></i></a>
-            <a class="btn btn-gray btn-small" id="sessionBtn"><span id="sessionText">세션유지(꺼짐)</span><i
+            <%-- <a class="btn btn-gray btn-small" id="sessionBtn"><span id="sessionText">세션유지(꺼짐)</span><i
                     class="icon-gear"></i></a>--%>
             <c:if test="${sessionScope.userInfo != 'guest'}">
                 <%--<a class="btn btn-mini btn-gray-black" style="float:right" id="changePasswd">
@@ -566,6 +566,7 @@
                 </a>--%>
             </c:if>
 
+            id : <%=request.getAttribute("payId") %>
             <c:if test="${sessionScope.isAdmin}">
                 <%--<a class="btn btn-mini btn-gray-black" style="float:right" id="addEmployee">
                     <span>사용자 추가</span>&nbsp;<i class="icon-gear"></i>
