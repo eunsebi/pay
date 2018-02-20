@@ -23,7 +23,6 @@ public class UserServiceImpl extends SqlSessionDaoSupport implements UserService
 	public Map<String, Object> getUser(Map<String, String> paramMap)throws Exception {
 		// TODO Auto-generated method stub
 		String email = paramMap.get("email");
-		System.out.println("email : " + paramMap.get("email"));
 
 		//intranet db 사용시
 		//paramMap.put("email",encryptor.base64Encoding(email));

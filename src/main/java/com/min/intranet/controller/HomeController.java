@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Handles requests for the application home page.
@@ -53,11 +54,23 @@ public class HomeController {
 		logger.info("Welcome main! The client locale is {}.", locale);
 		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 
+		System.out.println("session Writer : " + writer);
+
 		if (writer == null) return "redirect:/user/loginPage.do";
 		else return "/home/main";
 	}
 
+	/**
+	 * ekkor 사이트 로그인 연동
+	 * @param locale
+	 * @param request
+	 * @param email
+	 * @param passwd
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "payLogin.do", method = RequestMethod.POST)
+	@ResponseBody
 	public String payLogin (Locale locale, HttpServletRequest request,
 							@RequestParam("email") String email,
 							@RequestParam("passwd") String passwd)
@@ -84,7 +97,7 @@ public class HomeController {
 			session.setAttribute("isAdmin", true);
 			userMap.put("isLogin", true);
 			userMap.put("passwd", "");
-			return "redirect:/http://ekkor.ze.am/pay/home/main.do";
+			return "redirect:http://ekkor.ze.am/pay/home/main.do";
 		}
 
 		if ("".equals(email)) {
@@ -103,6 +116,6 @@ public class HomeController {
 		}
 		userMap.put("passwd", "");
 
-		return "redirect:/http://ekkor.ze.am/pay/home/main.do";
+		return "redirect:http://ekkor.ze.am/pay/home/main.do";
 	}
 }
