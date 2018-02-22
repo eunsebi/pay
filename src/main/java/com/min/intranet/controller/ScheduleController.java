@@ -3,6 +3,7 @@ package com.min.intranet.controller;
 import com.min.intranet.core.CommonUtil;
 import com.min.intranet.service.PayUserDataVO;
 import com.min.intranet.service.ScheduleService;
+import com.min.intranet.service.UserVO;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -60,13 +61,14 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "scheduleArticle.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Map<String, String>> scheduleArticle(Locale locale, Model model, HttpServletRequest req,
+	public List<Map<String, String>> scheduleArticle(Locale locale, Model model, HttpServletRequest req, UserVO user,
 													 @RequestParam("syear") String syear,
 			@RequestParam("smonth") String smonth, @RequestParam("eyear") String eyear,
 			@RequestParam("emonth") String emonth) throws Exception {
 		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
 
-		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 
 		System.out.println("write : "  + writer);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -112,7 +114,7 @@ public class ScheduleController {
      */
 	@RequestMapping(value = "payMonthWrite.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> payMonthWrite(Locale locale, Model model, HttpServletRequest request,
+	public Map<String, Object> payMonthWrite(Locale locale, Model model, HttpServletRequest request, UserVO user,
 											 @RequestParam("time_salary") String time_salary,
 											 @RequestParam("job_time") String job_time,
 											 @RequestParam("full_working_pension") String full_working_pension,
@@ -129,7 +131,8 @@ public class ScheduleController {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
 
 		//int seq = homeService.getScheduleMaxSeq();
 		//paramMap.put("seq", "" + (seq + 1));
@@ -173,14 +176,15 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "payMonthSelect.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, ?> payMonthSelect(Locale locale, HttpServletRequest request,
+	public Map<String, ?> payMonthSelect(Locale locale, HttpServletRequest request, UserVO user,
 										 @RequestParam("syear") String syear,
 										 @RequestParam("smonth") String smonth) throws Exception {
 		logger.info("Welcome payMonthSelect(급여정보 불러오기)! The client locale is {}.", locale);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, String> selectMap = new HashMap<String, String>();
-		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
 
 		System.out.println("----------------- 급여정보 불러오기 ----------------------");
 
@@ -311,7 +315,7 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "payMonthUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> payMonthUpdate(Locale locale, Model model, HttpServletRequest request,
+	public Map<String, Object> payMonthUpdate(Locale locale, Model model, HttpServletRequest request, UserVO user,
 											 @RequestParam("time_salary") String time_salary,
 											 @RequestParam("job_time") String job_time,
 											 @RequestParam("full_working_pension") String full_working_pension,
@@ -328,7 +332,8 @@ public class ScheduleController {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
 
 		//int seq = homeService.getScheduleMaxSeq();
 		//paramMap.put("seq", "" + (seq + 1));
@@ -365,7 +370,7 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "payDay.do", method = RequestMethod.GET)
 	@ResponseBody
-    public List<Map<String, String>> payDay(Locale locale, HttpServletRequest request,
+    public List<Map<String, String>> payDay(Locale locale, HttpServletRequest request, UserVO user,
 						 /*@RequestParam Map<String, String> commandMap,*/
 						 @RequestParam("syear") String syear,
 						 @RequestParam("smonth") String smonth
@@ -374,7 +379,8 @@ public class ScheduleController {
         //Map<String, Object> resultMap = new HashMap<String, Object>();
 		logger.info("Welcome payDay(급여 계산)! The client locale is {}.", locale);
 
-		String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) request.getSession().getAttribute(CommonUtil.SESSION_USER);
 		Map<String, String> paramMap = new HashMap<String, String>();
 
 		//java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -443,7 +449,7 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "scheduleWrite.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> scheduleWrite(Locale locale, Model model, HttpServletRequest req,
+	public Map<String, Object> scheduleWrite(Locale locale, Model model, HttpServletRequest req, UserVO user,
 			@RequestParam("title") String title, @RequestParam("endtime") String endtime,
 			@RequestParam("pay_day") String pay_day, @RequestParam("pay_ot") String pay_ot,
 			@RequestParam("pay_ottime") String pay_ottime,
@@ -457,7 +463,8 @@ public class ScheduleController {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 		//StringTokenizer realname = new StringTokenizer(realnames, ",");
 		//StringTokenizer subname = new StringTokenizer(subnames, ",");
 
@@ -495,7 +502,7 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "scheduleUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> scheduleUpdate(Locale locale, Model model, HttpServletRequest req,
+	public Map<String, Object> scheduleUpdate(Locale locale, Model model, HttpServletRequest req, UserVO user,
 											  @RequestParam("seq") String seq,
 											  @RequestParam("title") String title,
 											  @RequestParam("endtime") String endtime,
@@ -511,7 +518,9 @@ public class ScheduleController {
 		logger.info("Welcome scheduleUpdate! The client locale is {}.", locale);
 		Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+
 		paramMap.put("seq", seq);
 		paramMap.put("writer", writer);
 		paramMap.put("title", title);
@@ -536,12 +545,14 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "scheduleDelete.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> scheduleDelete(Locale locale, Model model, HttpServletRequest req,
+	public Map<String, Object> scheduleDelete(Locale locale, Model model, HttpServletRequest req, UserVO user,
 			@RequestParam("seq") String seq) throws Exception {
 		logger.info("Welcome scheculeDelete! The client locale is {}.", locale);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
-		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+
 		paramMap.put("writer", writer);
 		paramMap.put("seq", seq);
 
@@ -559,11 +570,12 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value = "getSchedule.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, String> getSchedule(Locale locale, Model model, @RequestParam("seq") String seq,
+	public Map<String, String> getSchedule(Locale locale, Model model, @RequestParam("seq") String seq, UserVO user,
 			HttpServletRequest req) throws Exception {
 		logger.info("Welcome getSchedule! The client locale is {}.", locale);
 
-		String user = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = user.getEmail();
+		//String user = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("seq", seq);
 		Map<String, String> schedule = homeService.getSchedule(paramMap);

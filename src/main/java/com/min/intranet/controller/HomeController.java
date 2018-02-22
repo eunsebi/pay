@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.min.intranet.core.CommonUtil;
 import com.min.intranet.service.UserService;
+import com.min.intranet.service.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
-	public String main(Locale locale, Model model, HttpServletRequest req,
-					   @RequestParam("email") String writer) {
+	public String main(Locale locale, Model model, HttpServletRequest req) {
+						//, @RequestParam("email") String writer) {
 		/*
 		 * logger.info("Welcome main! The client locale is {}.", locale); String
 		 * userSys = req.getHeader("user-agent"); boolean isM = false; String []
@@ -54,7 +55,9 @@ public class HomeController {
 		 */
 		logger.info("Welcome main! The client locale is {}.", locale);
 
-		Map<String, Object> userMap = new HashMap<String, Object>();
+		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+
+		/*Map<String, Object> userMap = new HashMap<String, Object>();
 		HttpSession session = req.getSession();
 		if (writer != null) {
 			session.setAttribute(CommonUtil.SESSION_USER, writer);
@@ -66,12 +69,25 @@ public class HomeController {
 			writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 		}
 
-		System.out.println("session : " + session.getAttribute(CommonUtil.SESSION_USER));
+		System.out.println("session : " + session.getAttribute(CommonUtil.SESSION_USER));*/
 
 		System.out.println("session Writer : " + writer);
 
 		if (writer == null) return "redirect:/user/loginPage.do";
 		else return "/home/main";
+	}
+
+	@RequestMapping(value = "payMain.do", method = RequestMethod.POST)
+	public String payMain (Locale locale, HttpServletRequest request,
+						   @RequestParam("email") String email) throws Exception {
+
+		UserVO user = new UserVO();
+
+		user.setEmail(email);
+
+		System.out.println("email : " + user.getEmail());
+		//return "/home/main";
+		return "redirect:http://ekkor.ze.am/pay/home/main.do";
 	}
 
 	/**
