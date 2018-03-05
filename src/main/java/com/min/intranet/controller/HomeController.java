@@ -57,37 +57,21 @@ public class HomeController {
 
 		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 
-		/*Map<String, Object> userMap = new HashMap<String, Object>();
-		HttpSession session = req.getSession();
-		if (writer != null) {
-			session.setAttribute(CommonUtil.SESSION_USER, writer);
-			if (writer.equals(adminEmail)) {
-				userMap.put("isAdmin", true);
-			}
-			userMap.put("isLogin", true);
-		} else {
-			writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
-		}
-
-		System.out.println("session : " + session.getAttribute(CommonUtil.SESSION_USER));*/
-
-		System.out.println("session Writer : " + writer);
-
 		if (writer == null) return "redirect:/user/loginPage.do";
 		else return "/home/main";
 	}
 
-	@RequestMapping(value = "payMain.do", method = RequestMethod.POST)
+	@RequestMapping(value = "payMain.do", method = RequestMethod.GET)
 	public String payMain (Locale locale, HttpServletRequest request,
 						   @RequestParam("email") String email) throws Exception {
 
-		UserVO user = new UserVO();
+		HttpSession session = request.getSession();
 
-		user.setEmail(email);
+		session.setAttribute(CommonUtil.SESSION_USER, email);
 
-		System.out.println("email : " + user.getEmail());
-		//return "/home/main";
-		return "redirect:http://ekkor.ze.am/pay/home/main.do";
+		return "redirect:/home/main";
+		//return "redirect:http://ekkor.ze.am/pay/home/main.do";
+
 	}
 
 	/**
@@ -146,6 +130,7 @@ public class HomeController {
 		}
 		userMap.put("passwd", "");
 
-		return "redirect:http://ekkor.ze.am/pay/home/main.do";
+		//return "redirect:http://ekkor.ze.am/pay/home/main.do";
+		return "redirect:/home/main.do";
 	}
 }
