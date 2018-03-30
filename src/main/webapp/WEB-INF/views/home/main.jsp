@@ -30,6 +30,7 @@
 
 <body>
 <div class="jui" style="width: 1250px;margin: 0 auto;">
+    <input type="hidden" id="email" value="${email}">
     <input type="hidden" id="selectUser">
     <input type="hidden" id="selectTab" value="tab_Home">
     <!-- 탭 -->

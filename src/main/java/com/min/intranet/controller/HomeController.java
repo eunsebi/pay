@@ -62,14 +62,17 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "payMain.do", method = RequestMethod.GET)
-	public String payMain (Locale locale, HttpServletRequest request,
+	public String payMain (Locale locale, HttpServletRequest request, Model model,
 						   @RequestParam("email") String email) throws Exception {
 
+		System.out.println("================= payMain ===============================");
 		HttpSession session = request.getSession();
 
 		session.setAttribute(CommonUtil.SESSION_USER, email);
+		request.setAttribute("email", email);
 
 		return "redirect:/home/main";
+		//return "/test";
 		//return "redirect:http://ekkor.ze.am/pay/home/main.do";
 
 	}
