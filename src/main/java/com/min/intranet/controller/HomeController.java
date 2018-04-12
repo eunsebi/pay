@@ -66,13 +66,14 @@ public class HomeController {
 						   @RequestParam("email") String email) throws Exception {
 
 		System.out.println("================= payMain ===============================");
-		HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();
 
-		session.setAttribute(CommonUtil.SESSION_USER, email);
+		//session.setAttribute(CommonUtil.SESSION_USER, email);
 		request.setAttribute("email", email);
 
-		return "redirect:/home/main";
-		//return "/test";
+		//return "redirect:/home/main";
+		return "/home/main";
+		//return "test";
 		//return "redirect:http://ekkor.ze.am/pay/home/main.do";
 
 	}

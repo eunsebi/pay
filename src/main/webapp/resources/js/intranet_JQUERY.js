@@ -131,9 +131,11 @@ $(function(){
 
     $('#pay-monthtimView').click(function(){
 		var url = getContextPath()+'/home/payMonthSelect.do';
+        var email = $('#email').val();
 		$.ajax({
 			url : url,
 			type : 'post',
+			data : {emal:email},
 			success : function(response){
 				//$('#contents').val('');
 				/*$('#pay_day').val('');
@@ -319,10 +321,12 @@ $(function(){
 		axisFormat : "HH:mm",
 		editable: false,
 		events: function(start, end, callback) {
+            var email = $('#email').val();
 	        $.ajax({
 	            url: getContextPath()+"/home/scheduleArticle.do",
 	            dataType: 'json',
 	            data: {
+	            	email:email,
 	            	syear:start.getFullYear(),
 		        	smonth:start.getMonth()+1,
 		        	eyear:end.getFullYear(),
@@ -356,13 +360,14 @@ $(function(){
 	        });
 	    },
 	    eventClick: function(calEvent, jsEvent, view) {
+            var email = $('#email').val();
 	    	if(calEvent.seq != null){
 
 	    		$.getJSON(getContextPath()+"/home/scheduleFiles.do",{seq:calEvent.seq},function(response){
 	    			var files;
 	    			files = response;
 
-			    	$.getJSON(getContextPath()+"/home/getSchedule.do",{seq:calEvent.seq},function(response){
+			    	$.getJSON(getContextPath()+"/home/getSchedule.do",{seq:calEvent.seq,email:email},function(response){
 			    		var article = response;
 				    	var sdate = new Date(article.starttime);
 						var stime = sdate.getFullYear() + "년 " + (sdate.getMonth()+1) + "월 " + sdate.getDate() + "일";
@@ -381,7 +386,7 @@ $(function(){
                             + fileHtml
                         );
 						if(article.isWriter == 'true'){
-							scheduleParam = {seq : article.seq,title : article.title, contents : article.contents, starttime : article.starttime, endtime : article.endtime, etcYn : article.etcYn, files:files};
+							scheduleParam = {email:email,seq : article.seq,title : article.title, contents : article.contents, starttime : article.starttime, endtime : article.endtime, etcYn : article.etcYn, files:files};
 							var updateBtn = $('<a/>', {
 											    href: '#',
 											    name: 'updateBtn',
@@ -431,7 +436,8 @@ $(function(){
 	    	}
 	    },
 	    dayClick: function(date) {
-			scheduleParam = {seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
+            var email = $('#email').val();
+			scheduleParam = {email:email,seq : 0, title : '', contents : '', starttime : date.getTime(), endtime : date.getTime(), writer:''};
 			$('#title').val(scheduleParam.title);
 			$('#contents').val(scheduleParam.contents);
 			spicker.select(date.getFullYear(),date.getMonth()+1,date.getDate());

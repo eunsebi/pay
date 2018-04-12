@@ -113,7 +113,8 @@ function getEtc(){
 	var smonth = $('#smonth').val();
 	var eyear = $('#eyear').val();
 	var emonth = $('#emonth').val();
-	$.getJSON(getContextPath()+'/home/getEtc.do',{syear:syear,smonth:smonth,eyear:eyear,emonth:emonth}).done(function(response){
+	var email = $('#email').val();
+	$.getJSON(getContextPath()+'/home/getEtc.do',{email:email,syear:syear,smonth:smonth,eyear:eyear,emonth:emonth}).done(function(response){
 		var result = response;
 		var html = '';
 		for(var i = 0 ; i < result.length ; i ++){
@@ -324,10 +325,11 @@ function contentsDelete(seq){
  * 스케줄 페이지 변경
  */
 function changePage(pNo){
+    var email = $('#email').val();
 	if($('#selectTab').val() == 'tab_Home'){
 		refrashRow(userArticle, {param:{page : pNo, email : $('#selectUser').val()}, url: getContextPath()+'/home/userArticle.do'});
 	}else if($('#selectTab').val() == 'tab_Schedule'){
-		refrashRow(scheduleArticle, {url: getContextPath()+'/home/scheduleArticle.do', param:{page : pNo, today : datepicker.getFormat()}});
+		refrashRow(scheduleArticle, {url: getContextPath()+'/home/scheduleArticle.do', param:{email:email, page : pNo, today : datepicker.getFormat()}});
 	}
 }
 
@@ -540,10 +542,11 @@ function refrashRow(table, param){
 function getPay(year,month){
     var syear = year;
     var smonth = month;
+    var email = $('#email').val();
     /*var syear = $('#paySyear').val();
     var smonth = $('#paySmonth').val();
         $.getJSON(getContextPath()+'/home/payDay.do',{syear:syear,smonth:smonth},function(response){*/
-		$.getJSON(getContextPath()+'/home/payDay.do',{syear:year,smonth:month},function(response){
+		$.getJSON(getContextPath()+'/home/payDay.do',{syear:year,smonth:month,email:email},function(response){
         var result = response;
         var html = '';
         if (result.length == 0) {
@@ -624,7 +627,8 @@ function getPay(year,month){
 function getPayMonthView(year, month){
     var syear = year;
     var smonth = month;
-    $.getJSON(getContextPath()+'/home/payMonthSelect.do',{syear:syear,smonth:month},function(response){
+    var email = $('#email').val();
+    $.getJSON(getContextPath()+'/home/payMonthSelect.do',{syear:syear,smonth:month,email:email},function(response){
         var result = response;
         var html = '';
         if (result.length == 0) {

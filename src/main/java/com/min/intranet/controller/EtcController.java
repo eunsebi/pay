@@ -39,11 +39,20 @@ public class EtcController {
 	@RequestMapping(value = "getEtc.do", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Map<String, String>> getEtc(Locale locale, Model model, HttpServletRequest req, @RequestParam("syear") String syear,
+											@RequestParam("email") String email,
 											@RequestParam("smonth") String smonth, @RequestParam("eyear") String eyear,
 											@RequestParam("emonth") String emonth) throws Exception {
 		logger.info("Welcome getEtc! The client locale is {}.", locale);
 
-		String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		String writer = "";
+
+		if (req.getSession().getAttribute(CommonUtil.SESSION_USER) != null) {
+			writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
+		} else {
+			writer = email;
+		}
+
+		//String writer = (String) req.getSession().getAttribute(CommonUtil.SESSION_USER);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("writer", writer);
