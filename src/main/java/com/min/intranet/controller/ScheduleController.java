@@ -67,7 +67,6 @@ public class ScheduleController {
 			@RequestParam("emonth") String emonth) throws Exception {
 		logger.info("Welcome scheduleArticle! The client locale is {}.", locale);
 
-		System.out.println("-------------------------------------------------------------------");
 		String writer = "";
 
 		if (req.getSession().getAttribute(CommonUtil.SESSION_USER) != null) {
@@ -166,14 +165,12 @@ public class ScheduleController {
 		System.out.println("conut : " + count);
 
 		if (count == 0) {
-			System.out.println("등록했다.......");
 			Integer writeCnt = homeService.payMonthWrite(paramMap);
 			System.out.println("resultCnt : " +writeCnt );
 			resultMap.put("resultCnt", writeCnt);
 			resultMap.put("error", "ok");
             //paramMap.put("error", "10MB 이하의 파일만 업로드 가능합니다.");
         } else {
-			System.out.println("이미 등록이 되어있다.....");
 			resultMap.put("error", "error");
         }
 		return resultMap;
@@ -651,7 +648,8 @@ public class ScheduleController {
 		Map<String, String> schedule = homeService.getSchedule(paramMap);
 		String contents = schedule.get("contents");
 		schedule.put("contents", contents);
-		if (user.equals(schedule.get("email"))) {
+
+		if (writer.equals(schedule.get("email"))) {
 			schedule.put("isWriter", "true");
 		}
 		return schedule;

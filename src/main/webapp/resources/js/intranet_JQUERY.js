@@ -535,6 +535,7 @@ $(function(){
         var etc = removeComma($('#etc').val());
         var longevity_pension = removeComma($('#longevity_pension').val());
         var payDate = removeComma($('#pay_date').val());
+        var email = $('#email').val();
 
         if(timeSalary == ''){
             alert('시급을 입력하세요.');
@@ -582,7 +583,8 @@ $(function(){
                     longevity_pension: longevity_pension,
                     yearly: yearly,
                     etc: etc,
-                    pay_date: payDate
+                    pay_date: payDate,
+					email: email
                 },
                 type: 'post',
                 success: function (response) {
@@ -605,6 +607,7 @@ $(function(){
 
     // 시급 수정 등록
     $('#payBtn_Update').click(function(){
+    	var email = $('#email').val();
         var time_salary_Update = removeComma($('#time_salary_Update').val());
         /*var job_time = $('#job_time_Update').val();
         var full_working_pension = $('#full_working_pension_Update').val();
@@ -650,7 +653,8 @@ $(function(){
                     longevity_pension: removeComma($('#longevity_pension_Update').val()),
                     yearly: removeComma($('#yearly_Update').val()),
                     etc: removeComma($('#etc_Update').val()),
-                    pay_date: pay_date_Update
+                    pay_date: pay_date_Update,
+					email:email
                 },
                 type: 'post',
                 success: function (response) {
