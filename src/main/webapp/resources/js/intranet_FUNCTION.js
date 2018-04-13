@@ -303,8 +303,9 @@ function contentsUpdate(){
  * 스케줄 삭제함수
  */
 function contentsDelete(seq){
+	var email = $('#email').val();
 	if(confirm('삭제 하시겠습니까?')){
-		$.post(getContextPath()+'/home/scheduleDelete.do', {seq:seq}, function(data, textStatus) {
+		$.post(getContextPath()+'/home/scheduleDelete.do', {seq:seq,email:email}, function(data, textStatus) {
 			var result = data;
 			if(result.resultCnt > 0){
 				alert('삭제 완료');
