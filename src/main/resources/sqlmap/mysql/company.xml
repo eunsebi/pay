@@ -9,7 +9,7 @@
 			ADDRESS as address, 
 			PHONE as phone, 
 			EMAIL as email 
-		FROM COMPANY 
+		FROM COMPANY
 		WHERE SEQ = #{seq}
 	</select>
 </mapper>
