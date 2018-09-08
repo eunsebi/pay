@@ -213,7 +213,7 @@ public class ScheduleController {
 			paramMap.put("payDate", syear+smonth);
 		}
 
-		if(Integer.parseInt(smonth) < 9) {
+		if(Integer.parseInt(smonth) <= 9) {
 			smonth = "0"+ smonth;
 		}
 
@@ -272,7 +272,7 @@ public class ScheduleController {
 				System.out.println("bb : " + bb);
 				smonth = Integer.toString(bb);
 
-				if(Integer.parseInt(smonth) < 9) {
+				if(Integer.parseInt(smonth) <= 9) {
 					smonth = "0"+ smonth;
 					selectMap.put("pay_date", syear+smonth);
 					System.out.println("9월 이전이다 payDate : " + selectMap.get("pay_date"));
@@ -293,10 +293,13 @@ public class ScheduleController {
 					syear = Integer.toString(ccc);
 					smonth = "12";
 					selectMap.put("pay_date", syear+smonth);
-					System.out.println("12 월 넘었다 payDate : " + selectMap.get("pay_date"));
+					System.out.println("12 월 넘었다 payDate : " + selectResult.get("pay_date"));
 				}
-
+				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("급여 등록 전 payDate : " + selectMap.get("pay_date"));
+				selectMap.put("email",writer);
+				System.out.println("emal : " +  writer);
+
 				Integer writeCnt = homeService.payMonthWrite(selectMap);
 
 				System.out.println(selectMap.get("pay_date") + " 등록했다.");
@@ -440,7 +443,7 @@ public class ScheduleController {
 			sSearchDate += Integer.toString(iMonth+1).length() == 1 ? "0" + Integer.toString(iMonth+1) :Integer.toString(iMonth+1);
 		}*/
 
-		if(Integer.parseInt(sMonth) < 9) {
+		if(Integer.parseInt(sMonth) <= 9) {
 			sMonth = "0"+ sMonth;
 		}
 
