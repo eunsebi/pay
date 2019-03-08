@@ -300,9 +300,12 @@
                             <option value="1">주간</option>
                             <option value="2">야간</option>
                             <option value="3">특근</option>
-                            <option value="4">야특</option>
+                            <option value="4">야특</option>:wq
+
                             <option value="5">년차</option>
                             <option value="6">결근</option>
+                            <option value="7">오전</option>
+                            <option value="8">오후</option>
                         </select>
                     </td>
                 </tr>

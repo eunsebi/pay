@@ -211,6 +211,8 @@ $(function(){
         else if (pay_day == "4") title1 = "야특";
         else if (pay_day == "5") title1 = "년차";
         else if (pay_day == "6") title1 = "결근";
+		else if (pay_day == "7") title1 = "오전";
+		else if (pay_day == "8") title1 = "오후";
 
         if (pay_ot == "1") title2 = "OT";
         else title2 = "";
@@ -261,7 +263,9 @@ $(function(){
                     scheduleParam.pay_nighttime = '7';
                 }
                 //alert(form.salaryHolidayTime.value);
-            }  else {
+            } else if (pay_day == "8") {
+				scheduleParam.pay_nighttime = "0.5";
+			} else {
                 scheduleParam.pay_nighttime = "0";
             }
 
